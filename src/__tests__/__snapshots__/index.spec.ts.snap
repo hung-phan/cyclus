@@ -3,7 +3,7 @@
 exports[`cyclus injecting dependencies correctly 'should work with map 1`] = `
 SystemMap {
   "map": Object {
-    "database": Database {
+    "db": Database {
       "__metadata": Object {
         "dependencies": Object {},
         "isInitialised": true,
@@ -18,14 +18,14 @@ SystemMap {
         },
         "isInitialised": true,
       },
-      "db": Database {
+      "database": Database {
         "__metadata": Object {
           "dependencies": Object {},
           "isInitialised": true,
         },
         "dbConnection": "OPENED",
       },
-      "sched": Scheduler {
+      "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
           "isInitialised": true,
@@ -33,7 +33,7 @@ SystemMap {
         "tick": 10,
       },
     },
-    "scheduler": Scheduler {
+    "sched": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
         "isInitialised": true,
@@ -42,8 +42,8 @@ SystemMap {
     },
   },
   "order": Array [
-    "scheduler",
-    "database",
+    "sched",
+    "db",
     "exampleComponent",
   ],
 }

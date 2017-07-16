@@ -1,5 +1,6 @@
 import * as get from "lodash/get";
 import * as pick from "lodash/pick";
+import * as values from "lodash/values";
 import * as isArray from "lodash/isArray";
 import * as isPlainObject from "lodash/isPlainObject";
 import {
@@ -133,7 +134,7 @@ function dependencyGraph(
   const dependencyArray = Object.keys(subSystem).reduce((result, key) => {
     const component = subSystem[key];
 
-    Object.keys(dependencies(component)).forEach(dependency =>
+    values(dependencies(component)).forEach(dependency =>
       result.push([dependency, key])
     );
 
@@ -153,7 +154,7 @@ function assocDependencies(
     const dependencyKey = metadataDependencies[key];
 
     Object.assign(component, {
-      [dependencyKey]: getDependency(system, key, component, dependencyKey)
+      [key]: getDependency(system, dependencyKey, component, key)
     });
   });
 }
@@ -234,9 +235,7 @@ export class SystemMap {
   }
 
   replace(newMap: PlainObject) {
-    const systemKeys = Object.keys(newMap);
-
-    this.update(systemKeys, "stop");
+    this.update(Object.keys(newMap), "stop");
     Object.assign(this.map, newMap);
     this.update(Object.keys(this.map), "start");
   }

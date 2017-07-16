@@ -16,6 +16,10 @@
     "typescript": "^2.4.1",
     "webpack": "^3.2.0"
   },
+  "engines": {
+    "node": ">= 4.1.0",
+    "npm": ">=3.0.0"
+  },
   "jest": {
     "moduleFileExtensions": [
       "ts",
@@ -29,10 +33,12 @@
     ]
   },
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf dist",
+    "prepublish": "npm run build",
     "test": "jest"
   }
 }

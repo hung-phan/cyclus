@@ -1,4 +1,4 @@
-import { Lifecycle, SystemMap, using } from "../cyclus";
+import { Lifecycle, SystemMap, using } from "..";
 
 describe("cyclus", () => {
   class Database extends Lifecycle {
@@ -27,8 +27,39 @@ describe("cyclus", () => {
       order.push("Stop Scheduler");
     }
   }
+
+  class ExampleComponent extends Lifecycle {
+    database: Database;
+    scheduler: Scheduler;
+
+    start() {
+      order.push("Start ExampleComponent");
+    }
+
+    stop() {
+      order.push("Stop ExampleComponent");
+    }
+  }
+
+  class NewDatabase extends Lifecycle {
+    dbConnection: string;
+
+    start() {
+      order.push("Start NewDatabase");
+      this.dbConnection = "OPENED";
+    }
+
+    stop() {
+      order.push("Stop NewDatabase");
+      this.dbConnection = "CLOSED";
+    }
+  }
+
   const createDatabase = (): Lifecycle => new Database();
+  const createNewDatabase = (): Lifecycle => new NewDatabase();
   const createScheduler = (): Lifecycle => new Scheduler();
+  const createExampleComponent = (): Lifecycle => new ExampleComponent();
+
   let order: Array<string>;
   let system: SystemMap;
 
@@ -37,20 +68,6 @@ describe("cyclus", () => {
   });
 
   describe("lifecycle", () => {
-    class ExampleComponent extends Lifecycle {
-      database: Database;
-      scheduler: Scheduler;
-
-      start() {
-        order.push("Start ExampleComponent");
-      }
-
-      stop() {
-        order.push("Stop ExampleComponent");
-      }
-    }
-    const createExampleComponent = (): Lifecycle => new ExampleComponent();
-
     beforeEach(() => {
       system = new SystemMap({
         database: createDatabase(),
@@ -85,24 +102,10 @@ describe("cyclus", () => {
   });
 
   describe("injecting dependencies correctly", () => {
-    class ExampleComponent extends Lifecycle {
-      db: Database;
-      sched: Scheduler;
-
-      start() {
-        order.push("Start ExampleComponent");
-      }
-
-      stop() {
-        order.push("Stop ExampleComponent");
-      }
-    }
-    const createExampleComponent = (): Lifecycle => new ExampleComponent();
-
     it("'should work with map", () => {
       system = new SystemMap({
-        database: createDatabase(),
-        scheduler: createScheduler(),
+        db: createDatabase(),
+        sched: createScheduler(),
         exampleComponent: using(createExampleComponent(), {
           database: "db",
           scheduler: "sched"
@@ -116,35 +119,6 @@ describe("cyclus", () => {
   });
 
   describe("replacing dependencies on the fly", () => {
-    class NewDatabase extends Lifecycle {
-      dbConnection: string;
-
-      start() {
-        order.push("Start NewDatabase");
-        this.dbConnection = "OPENED";
-      }
-
-      stop() {
-        order.push("Stop NewDatabase");
-        this.dbConnection = "CLOSED";
-      }
-    }
-
-    class ExampleComponent extends Lifecycle {
-      database: Database | NewDatabase;
-      scheduler: Scheduler;
-
-      start() {
-        order.push("Start ExampleComponent");
-      }
-
-      stop() {
-        order.push("Stop ExampleComponent");
-      }
-    }
-    const createNewDatabase = (): Lifecycle => new NewDatabase();
-    const createExampleComponent = (): Lifecycle => new ExampleComponent();
-
     it("'should work correctly", () => {
       system = new SystemMap({
         database: createDatabase(),
