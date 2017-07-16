@@ -1,11 +1,10 @@
 {
   "name": "cyclus",
   "description": "port component to javascript",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "hung-phan",
   "dependencies": {
-    "lodash": "^4.17.4",
-    "tslib": "^1.7.1"
+    "lodash": "^4.17.4"
   },
   "devDependencies": {
     "@types/jest": "^20.0.2",
@@ -13,6 +12,7 @@
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
     "ts-node": "^3.2.0",
+    "tslib": "^1.7.1",
     "typescript": "^2.4.1",
     "webpack": "^3.2.0"
   },
@@ -20,6 +20,12 @@
     "node": ">= 4.1.0",
     "npm": ">=3.0.0"
   },
+  "files": [
+    "dist",
+    "src",
+    "preprocessor.js",
+    "README.md"
+  ],
   "jest": {
     "moduleFileExtensions": [
       "ts",
@@ -34,11 +40,11 @@
   },
   "license": "MIT",
   "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
   "scripts": {
     "build": "npm run clean && tsc",
     "clean": "rimraf dist",
     "prepublish": "npm run build",
     "test": "jest"
-  }
+  },
+  "typings": "dist/index.d.ts"
 }
