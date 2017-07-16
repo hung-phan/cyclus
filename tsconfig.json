@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "jsx": "React",
+    "typeRoots" : [
+      "node_modules/@types",
+      "src/@types"
+    ],
+    "lib": ["es2016", "dom"],
+    "outDir": "dist",
+    "sourceMap": true
+  },
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*"
+  ]
+}

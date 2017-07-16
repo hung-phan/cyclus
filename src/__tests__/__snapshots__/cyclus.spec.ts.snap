@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`cyclus injecting dependencies correctly 'should work with map 1`] = `
+SystemMap {
+  "map": Object {
+    "database": Database {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "dbConnection": "OPENED",
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "db",
+          "scheduler": "sched",
+        },
+        "isInitialised": true,
+      },
+      "db": Database {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "dbConnection": "OPENED",
+      },
+      "sched": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "tick": 10,
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "tick": 10,
+    },
+  },
+  "order": Array [
+    "scheduler",
+    "database",
+    "exampleComponent",
+  ],
+}
+`;
+
+exports[`cyclus lifecycle should start the system in order 1`] = `
+Array [
+  "Start Scheduler",
+  "Start Database",
+  "Start ExampleComponent",
+]
+`;
+
+exports[`cyclus lifecycle should stop the system in reversed order 1`] = `
+Array [
+  "Start Scheduler",
+  "Start Database",
+  "Start ExampleComponent",
+  "Stop ExampleComponent",
+  "Stop Database",
+  "Stop Scheduler",
+]
+`;
+
+exports[`cyclus lifecycle starting should be idempotent 1`] = `
+Array [
+  "Start Scheduler",
+  "Start Database",
+  "Start ExampleComponent",
+]
+`;
+
+exports[`cyclus lifecycle stopping should be idempotent 1`] = `
+Array [
+  "Start Scheduler",
+  "Start Database",
+  "Start ExampleComponent",
+  "Stop ExampleComponent",
+  "Stop Database",
+  "Stop Scheduler",
+]
+`;
+
+exports[`cyclus replacing dependencies on the fly 'should work correctly 1`] = `
+SystemMap {
+  "map": Object {
+    "database": Database {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "dbConnection": "OPENED",
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "database",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": true,
+      },
+      "database": Database {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "dbConnection": "OPENED",
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "tick": 10,
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "tick": 10,
+    },
+  },
+  "order": Array [
+    "scheduler",
+    "database",
+    "exampleComponent",
+  ],
+}
+`;
+
+exports[`cyclus replacing dependencies on the fly 'should work correctly 2`] = `
+SystemMap {
+  "map": Object {
+    "database": NewDatabase {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "dbConnection": "OPENED",
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "database",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": true,
+      },
+      "database": NewDatabase {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "dbConnection": "OPENED",
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "tick": 10,
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "tick": 10,
+    },
+  },
+  "order": Array [
+    "scheduler",
+    "database",
+    "exampleComponent",
+  ],
+}
+`;
+
+exports[`cyclus replacing dependencies on the fly 'should work correctly 3`] = `
+Array [
+  "Start Scheduler",
+  "Start Database",
+  "Start ExampleComponent",
+  "Stop Database",
+  "Start NewDatabase",
+]
+`;
