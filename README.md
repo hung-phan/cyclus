@@ -2,7 +2,7 @@
 
 'Cyclus' is a tiny lib for managing the lifecycle and dependencies of software components which have runtime state.
 
-Inspire from 'Component' in clojure, make sure you read there document [here](https://github.com/stuartsierra/component)
+Inspire from 'Component' in clojure, make sure you read the document [here](https://github.com/stuartsierra/component)
 
 ## Usage
 
@@ -15,32 +15,32 @@ import { Lifecycle, SystemMap, using } from "cyclus";
 To create a component, define a class that extends `Lifecycle` class.
 
 ```typescript
-  class Database extends Lifecycle {
-    dbConnection: string;
+class Database extends Lifecycle {
+  dbConnection: string;
 
-    start() {
-      console.log("Start Database");
-      this.dbConnection = "OPENED";
-    }
-
-    stop() {
-      console.log("Stop Database");
-      this.dbConnection = "CLOSED";
-    }
+  start() {
+    console.log("Start Database");
+    this.dbConnection = "OPENED";
   }
+
+  stop() {
+    console.log("Stop Database");
+    this.dbConnection = "CLOSED";
+  }
+}
   
-  class Scheduler extends Lifecycle {
-    tick: number;
+class Scheduler extends Lifecycle {
+  tick: number;
 
-    start() {
-      console.log("Start Scheduler");
-      this.tick = 10;
-    }
-
-    stop() {
-      console.log("Stop Scheduler");
-    }
+  start() {
+    console.log("Start Scheduler");
+    this.tick = 10;
   }
+
+  stop() {
+    console.log("Stop Scheduler");
+  }
+}
 ```
 
 Optionally, provide a constructor function that takes arguments for
