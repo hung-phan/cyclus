@@ -2,7 +2,7 @@
   "name": "example-system",
   "version": "1.0.0",
   "dependencies": {
-    "cyclus": "^1.1.3",
+    "cyclus": "^1.1.4",
     "js-csp": "^1.0.0"
   },
   "engines": {

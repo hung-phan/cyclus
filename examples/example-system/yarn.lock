@@ -13,9 +13,9 @@ core-js@^2.4.0:
   version "2.4.1"
   resolved "https://registry.yarnpkg.com/core-js/-/core-js-2.4.1.tgz#4de911e667b0eae9124e34254b53aea6fc618d3e"
 
-cyclus@^1.1.2:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/cyclus/-/cyclus-1.1.3.tgz#fbb6d7266e415f04565869c97226179dea73c76a"
+cyclus@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/cyclus/-/cyclus-1.1.4.tgz#a26d19c4a64a7485836288c0a53dc56713c3d09a"
   dependencies:
     lodash "^4.17.4"
     tslib "^1.7.1"

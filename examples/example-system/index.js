@@ -1,22 +1,25 @@
 const csp = require("js-csp");
-const { SystemMap, LifeCycle, using } = require("cyclus");
+const cyclus = require("cyclus");
+const using = cyclus.using;
+const LifeCycle = cyclus.Lifecycle;
+const SystemMap = cyclus.SystemMap;
 
 function call(functionName, ...args) {
   console.log(`call ${functionName} with args: [${args.join(", ")}]`);
 }
 
 class Queue extends LifeCycle {
-  constructor({ blockWhenFull }) {
+  constructor(config) {
     super();
 
-    this.blockWhenFull = blockWhenFull;
+    Object.assign(this, config);
   }
 
   start() {
     const self = this;
 
     this.stopChan = csp.chan(1);
-    this.conn = call("connectToQueue", this.blockWhenFull);
+    this.conn = call("connectToQueue");
 
     call("subscribeToQueue", function messageHandler(msg) {
       csp.putAsync(this.incomingMessagesChan, msg);
@@ -24,14 +27,14 @@ class Queue extends LifeCycle {
 
     csp.go(function*() {
       while (true) {
-        const { channel, value } = yield csp.alts([
+        const result = yield csp.alts([
           self.outgoingMessagesChan,
           self.stopChan
         ]);
 
-        switch (channel) {
+        switch (result.channel) {
           case self.outgoingMessagesChan:
-            call("publishToQueue", self.config, value);
+            call("publishToQueue", self.config, result.value);
             break;
 
           case self.stopChan:
@@ -97,14 +100,14 @@ class Worker extends LifeCycle {
 
     csp.go(function*() {
       while (true) {
-        const { channel, value } = yield csp.alts([
+        const result = yield csp.alts([
           self.inputChannel,
           self.stopChan
         ]);
 
-        switch (channel) {
+        switch (result.channel) {
           case self.outgoingMessagesChan:
-            csp.putAsync(self.resultChannel, self.workFn(self, value));
+            csp.putAsync(self.resultChannel, self.workFn(self, result.value));
             break;
 
           case self.stopChan:
