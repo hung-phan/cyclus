@@ -29,7 +29,7 @@ export class Lifecycle {
    * until the component is started. Returns an updated version of this
    * component.
    */
-  start() {
+  start(): Promise<any> | void {
     throw new CyclusNotImplemented();
   }
 
@@ -38,7 +38,7 @@ export class Lifecycle {
    * until the component is stopped. Returns an updated version of this
    * component.
    */
-  stop() {
+  stop(): Promise<any> | void {
     throw new CyclusNotImplemented();
   }
 }
@@ -151,20 +151,16 @@ function assocDependencies(
   const metadataDependencies = dependencies(component);
 
   Object.keys(metadataDependencies).forEach(key => {
-    const dependencyKey = metadataDependencies[key];
-
-    Object.assign(component, {
-      [key]: getDependency(system, dependencyKey, component, key)
-    });
+    component[key] = getDependency(system, metadataDependencies[key], component, key);
   });
 }
 
-function tryAction(
+async function tryAction(
   component: Lifecycle,
   system: PlainObject,
   systemKey: string,
   f: "start" | "stop"
-) {
+): Promise<any> {
   try {
     if (
       (component.__metadata.isInitialised && f === "start") ||
@@ -173,7 +169,7 @@ function tryAction(
       return;
     }
 
-    component[f]();
+    await component[f]();
     component.__metadata.isInitialised = f === "start";
   } catch (e) {
     throw new CyclusError(
@@ -215,29 +211,29 @@ export class SystemMap {
     return this.reversedOrder;
   }
 
-  start() {
-    this.update(this.__getBuiltOrder(), "start");
+  start(): Promise<any> {
+    return this.update(this.__getBuiltOrder(), "start");
   }
 
-  stop() {
-    this.update(this.__getReversedBuiltOrder(), "stop");
+  stop(): Promise<any> {
+    return this.update(this.__getReversedBuiltOrder(), "stop");
   }
 
-  update(order: Array<string>, f: "start" | "stop") {
-    this.map = order.reduce((system, key) => {
-      const component = getComponent(system, key);
+  async update(order: Array<string>, f: "start" | "stop"): Promise<any> {
+    for (const key of order) {
+      const component = getComponent(this.map, key);
 
-      assocDependencies(component, system);
-      tryAction(component, system, key, f);
+      assocDependencies(component, this.map);
+      await tryAction(component, this.map, key, f);
 
-      return Object.assign(system, { [key]: component });
-    }, this.map);
+      this.map[key] = component;
+    }
   }
 
-  replace(newMap: PlainObject) {
-    this.update(Object.keys(newMap), "stop");
+  async replace(newMap: PlainObject): Promise<any> {
+    await this.update(Object.keys(newMap), "stop");
     Object.assign(this.map, newMap);
-    this.update(Object.keys(this.map), "start");
+    await this.update(Object.keys(this.map), "start");
   }
 
   toString() {

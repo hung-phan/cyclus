@@ -14,7 +14,7 @@ test("buildDAG should return ['e', 'f', 'a', 'b', 'd', 'c']", () => {
       },
       [["a", "d"], ["f", "b"], ["b", "d"], ["f", "a"], ["d", "c"]]
     )
-  ).toEqual(["e", "f", "a", "b", "d", "c"]);
+  ).toMatchSnapshot();
 });
 
 test("build DAG should detect cycle", () => {

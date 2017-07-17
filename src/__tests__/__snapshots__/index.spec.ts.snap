@@ -1,5 +1,58 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`cyclus async 'should wait for start or stop method to resolve 1`] = `
+SystemMap {
+  "map": Object {
+    "component1": Component1 {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+    },
+    "component2": Component2 {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+    },
+    "component3": Component3 {
+      "__metadata": Object {
+        "dependencies": Object {
+          "component1": "component1",
+          "component2": "component2",
+        },
+        "isInitialised": true,
+      },
+      "component1": Component1 {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+      },
+      "component2": Component2 {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+      },
+    },
+  },
+  "order": Array [
+    "component2",
+    "component1",
+    "component3",
+  ],
+}
+`;
+
+exports[`cyclus async 'should wait for start or stop method to resolve 2`] = `
+Array [
+  "Start component 2 after 2000",
+  "Start component 1 after 1000",
+  "Start component 3",
+]
+`;
+
 exports[`cyclus injecting dependencies correctly 'should work with map 1`] = `
 SystemMap {
   "map": Object {

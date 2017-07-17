@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`buildDAG should return ['e', 'f', 'a', 'b', 'd', 'c'] 1`] = `
+Array [
+  "e",
+  "f",
+  "a",
+  "b",
+  "d",
+  "c",
+]
+`;
