@@ -145,6 +145,68 @@ system.replace({ database: createNewDatabase() });
 ```
 
 This will automatically `stop` previous version of the database, and `start` a new one.
+
+### Promise
+
+`start`, `stop`, or `replace` will return a promise instead of running synchronously. So makes sure you wait for the
+promise to resolve.
+
+```typescript
+const order = [];
+
+class Component1 extends Lifecycle {
+  async start() {
+    await timeout(1000);
+    order.push("Start component 1 after 1000");
+  }
+
+  async stop() {
+    await timeout(1000);
+    order.push("Stop component 1 after 1000");
+  }
+}
+
+class Component2 extends Lifecycle {
+  async start() {
+    await timeout(2000);
+    order.push("Start component 2 after 2000");
+  }
+
+  async stop() {
+    await timeout(2000);
+    order.push("Stop component 2 after 2000");
+  }
+}
+
+class Component3 extends Lifecycle {
+  component1: Component1;
+  component2: Component2;
+
+  start() {
+    order.push("Start component 3");
+  }
+
+  stop() {
+    order.push("Stop component 3");
+  }
+}
+
+const system = new SystemMap({
+  component1: createComponent1(),
+  component2: createComponent2(),
+  component3: using(createComponent3(), ["component1", "component2"])
+});
+
+system.start().then(() => {
+  // system started
+  // order = [
+  //   "Start component 2 after 2000",
+  //   "Start component 1 after 1000",
+  //   "Start component 3"
+  // ];
+});
+
+```
  
 ### Idempotent
 
