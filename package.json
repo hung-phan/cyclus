@@ -24,7 +24,8 @@
     "dist",
     "src",
     "preprocessor.js",
-    "README.md"
+    "README.md",
+    "tsconfig.json"
   ],
   "jest": {
     "moduleFileExtensions": [
