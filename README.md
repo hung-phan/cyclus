@@ -6,6 +6,10 @@ Inspire from 'Component' in clojure, make sure you read the document [here](http
 
 ## Usage
 
+```bash
+npm install cyclus
+```
+
 ```typescript
 import { Lifecycle, SystemMap, using } from "cyclus";
 ```
