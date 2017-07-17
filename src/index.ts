@@ -47,7 +47,7 @@ export class Lifecycle {
  * Returns the map of other components on which this component depends.
  */
 function dependencies(component: Lifecycle): PlainObject {
-  return component.__metadata.dependencies;
+  return get(component, "__metadata.dependencies", {});
 }
 
 /**
@@ -113,7 +113,7 @@ function getDependency(
 
   if (dependency === NOT_FOUND) {
     throw new CyclusError(
-      `Missing dependency ${dependencyKey} of ${typeof component} expected in system at ${systemKey}`,
+      `Missing dependency ${dependencyKey} of ${component} expected in system at ${systemKey}`,
       {
         system,
         systemKey,
@@ -144,14 +144,16 @@ function dependencyGraph(
   return buildDAG(subSystem, dependencyArray);
 }
 
-function assocDependencies(
-  component: Lifecycle,
-  system: PlainObject
-) {
+function assocDependencies(component: Lifecycle, system: PlainObject) {
   const metadataDependencies = dependencies(component);
 
   Object.keys(metadataDependencies).forEach(key => {
-    component[key] = getDependency(system, metadataDependencies[key], component, key);
+    component[key] = getDependency(
+      system,
+      metadataDependencies[key],
+      component,
+      key
+    );
   });
 }
 
@@ -163,6 +165,7 @@ async function tryAction(
 ): Promise<any> {
   try {
     if (
+      !(component instanceof Lifecycle) ||
       (component.__metadata.isInitialised && f === "start") ||
       (!component.__metadata.isInitialised && f === "stop")
     ) {
@@ -172,8 +175,9 @@ async function tryAction(
     await component[f]();
     component.__metadata.isInitialised = f === "start";
   } catch (e) {
+    console.log(e);
     throw new CyclusError(
-      `Error in component ${systemKey} in system ${system} calling ${f}`,
+      `Error in component ${systemKey} in system.map calling ${f}`,
       {
         systemKey,
         component,

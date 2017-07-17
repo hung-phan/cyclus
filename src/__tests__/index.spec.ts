@@ -1,4 +1,5 @@
 import { Lifecycle, SystemMap, using } from "..";
+import { PlainObject } from "../types";
 
 describe("cyclus", () => {
   function timeout(ms): Promise<void> {
@@ -148,24 +149,24 @@ describe("cyclus", () => {
   describe("async", () => {
     class Component1 extends Lifecycle {
       async start() {
-        await timeout(1000);
+        await timeout(100);
         order.push("Start component 1 after 1000");
       }
 
       async stop() {
-        await timeout(1000);
+        await timeout(100);
         order.push("Stop component 1 after 1000");
       }
     }
 
     class Component2 extends Lifecycle {
       async start() {
-        await timeout(2000);
+        await timeout(200);
         order.push("Start component 2 after 2000");
       }
 
       async stop() {
-        await timeout(2000);
+        await timeout(200);
         order.push("Stop component 2 after 2000");
       }
     }
@@ -198,6 +199,43 @@ describe("cyclus", () => {
 
       expect(system).toMatchSnapshot();
       expect(order).toMatchSnapshot();
+    });
+  });
+
+  describe("simple component", () => {
+    class Component extends Lifecycle {
+      config: PlainObject;
+
+      start() {
+        order.push("Start component 3");
+      }
+
+      stop() {
+        order.push("Stop component 3");
+      }
+    }
+    const createComponent = (): Lifecycle => new Component();
+
+    beforeEach(async () => {
+      system = new SystemMap({
+        config: {
+          a: 1,
+          b: 2
+        },
+        component: using(createComponent(), ["config"])
+      });
+      await system.start();
+    });
+
+    it("should work correctly", () => {
+      expect(system).toMatchSnapshot();
+    });
+
+    it("should able to replace the config on the fly", async () => {
+      await system.replace({
+        config: { c: 3, d: 4 }
+      });
+      expect(system).toMatchSnapshot();
     });
   });
 });

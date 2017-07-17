@@ -247,3 +247,57 @@ Array [
   "Start NewDatabase",
 ]
 `;
+
+exports[`cyclus simple component should able to replace the config on the fly 1`] = `
+SystemMap {
+  "map": Object {
+    "component": Component {
+      "__metadata": Object {
+        "dependencies": Object {
+          "config": "config",
+        },
+        "isInitialised": true,
+      },
+      "config": Object {
+        "c": 3,
+        "d": 4,
+      },
+    },
+    "config": Object {
+      "c": 3,
+      "d": 4,
+    },
+  },
+  "order": Array [
+    "config",
+    "component",
+  ],
+}
+`;
+
+exports[`cyclus simple component should work correctly 1`] = `
+SystemMap {
+  "map": Object {
+    "component": Component {
+      "__metadata": Object {
+        "dependencies": Object {
+          "config": "config",
+        },
+        "isInitialised": true,
+      },
+      "config": Object {
+        "a": 1,
+        "b": 2,
+      },
+    },
+    "config": Object {
+      "a": 1,
+      "b": 2,
+    },
+  },
+  "order": Array [
+    "config",
+    "component",
+  ],
+}
+`;
