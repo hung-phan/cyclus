@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "declaration": true,
-    "target": "es6",
     "module": "commonjs",
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -14,7 +13,6 @@
       "src/@types"
     ],
     "lib": ["es2017", "dom"],
-    "outDir": "dist",
     "sourceMap": true
   }
 }

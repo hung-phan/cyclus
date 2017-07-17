@@ -1,7 +1,7 @@
 {
   "name": "cyclus",
-  "description": "port component to javascript",
-  "version": "1.1.0",
+  "description": "IOC and lifecycle for javascript object",
+  "version": "1.1.1",
   "author": "hung-phan",
   "dependencies": {
     "lodash": "^4.17.4",
@@ -38,13 +38,15 @@
       "**/__tests__/*.spec.(ts|js)"
     ]
   },
+  "jsnext:main": "dist/esnext/index.js",
   "license": "MIT",
-  "main": "dist/index.js",
+  "main": "dist/es6/index.js",
+  "module": "dist/esnext/index.js",
   "scripts": {
-    "build": "npm run clean && tsc",
+    "build": "npm run clean && tsc --target es6 --outDir dist/es6 && tsc --target esnext --outDir dist/esnext",
     "clean": "rimraf dist",
     "prepublishOnly": "npm run build",
     "test": "jest"
   },
-  "typings": "dist/index.d.ts"
+  "typings": "dist/es6/index.d.ts"
 }
