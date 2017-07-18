@@ -34,7 +34,7 @@ class Queue extends LifeCycle {
 
         switch (result.channel) {
           case self.outgoingMessagesChan:
-            call("publishToQueue", self.config, result.value);
+            call("publishToQueue", result.value);
             break;
 
           case self.stopChan:
@@ -176,4 +176,6 @@ const system = (function(config) {
 
 system.start().then(() => {
   console.log("System started");
+
+  csp.putAsync(system.map.resultChannel, "Hello from the other side");
 });

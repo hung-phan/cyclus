@@ -209,7 +209,6 @@ system.start().then(() => {
   //   "Start component 3"
   // ];
 });
-
 ```
  
 ### Idempotent
@@ -221,4 +220,24 @@ it will behave as if you was calling it once. For example,
 system.start();
 system.start();  // => system.start();
 system.start();
+```
+
+### Raw access to component
+
+After component initialized, it will create a map at `.map` from `system`, this is intended for internal access only.
+This can be use do access component after they are started or stopped, but do not *modify* system.map directly, use
+`replace` instead.
+
+```typescript
+const system = new SystemMap({
+  component1: createComponent1(),
+  component2: createComponent2(),
+  component3: using(createComponent3(), ["component1", "component2"])
+});
+
+system.start().then(() => {
+  // system started
+
+  console.log(system.map); // => { component1, component2, component3 }
+});
 ```
