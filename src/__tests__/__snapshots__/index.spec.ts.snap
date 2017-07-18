@@ -2,6 +2,15 @@
 
 exports[`cyclus async 'should wait for start or stop method to resolve 1`] = `
 SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "component2",
+        "component1",
+        "component3",
+      ],
+    },
+  },
   "map": Object {
     "component1": Component1 {
       "__metadata": Object {
@@ -37,11 +46,6 @@ SystemMap {
       },
     },
   },
-  "order": Array [
-    "component2",
-    "component1",
-    "component3",
-  ],
 }
 `;
 
@@ -55,6 +59,15 @@ Array [
 
 exports[`cyclus injecting dependencies correctly 'should work with map 1`] = `
 SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "sched",
+        "db",
+        "exampleComponent",
+      ],
+    },
+  },
   "map": Object {
     "db": Database {
       "__metadata": Object {
@@ -94,11 +107,6 @@ SystemMap {
       "tick": 10,
     },
   },
-  "order": Array [
-    "sched",
-    "db",
-    "exampleComponent",
-  ],
 }
 `;
 
@@ -142,6 +150,15 @@ Array [
 
 exports[`cyclus replacing dependencies on the fly 'should work correctly 1`] = `
 SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "scheduler",
+        "database",
+        "exampleComponent",
+      ],
+    },
+  },
   "map": Object {
     "database": Database {
       "__metadata": Object {
@@ -181,16 +198,20 @@ SystemMap {
       "tick": 10,
     },
   },
-  "order": Array [
-    "scheduler",
-    "database",
-    "exampleComponent",
-  ],
 }
 `;
 
 exports[`cyclus replacing dependencies on the fly 'should work correctly 2`] = `
 SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "scheduler",
+        "database",
+        "exampleComponent",
+      ],
+    },
+  },
   "map": Object {
     "database": NewDatabase {
       "__metadata": Object {
@@ -230,11 +251,6 @@ SystemMap {
       "tick": 10,
     },
   },
-  "order": Array [
-    "scheduler",
-    "database",
-    "exampleComponent",
-  ],
 }
 `;
 
@@ -250,6 +266,14 @@ Array [
 
 exports[`cyclus simple component should able to replace the config on the fly 1`] = `
 SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "config",
+        "component",
+      ],
+    },
+  },
   "map": Object {
     "component": Component {
       "__metadata": Object {
@@ -268,15 +292,19 @@ SystemMap {
       "d": 4,
     },
   },
-  "order": Array [
-    "config",
-    "component",
-  ],
 }
 `;
 
 exports[`cyclus simple component should work correctly 1`] = `
 SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "config",
+        "component",
+      ],
+    },
+  },
   "map": Object {
     "component": Component {
       "__metadata": Object {
@@ -295,9 +323,5 @@ SystemMap {
       "b": 2,
     },
   },
-  "order": Array [
-    "config",
-    "component",
-  ],
 }
 `;

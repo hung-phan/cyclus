@@ -47,7 +47,7 @@ type Graph = { [key: string]: Node };
 function getNodeWithoutParentOrChild(graph: Graph): Array<string> {
   return Object.keys(graph).filter(
     key =>
-    graph[key].incomingNodes.size === 0 && graph[key].outgoingNodes.size === 0
+      graph[key].incomingNodes.size === 0 && graph[key].outgoingNodes.size === 0
   );
 }
 
@@ -79,7 +79,7 @@ function buildTopoGraph(graph: Graph): Array<string> {
   }
 
   return result;
-};
+}
 
 export default function buildDAG(
   system: PlainObject,
@@ -99,4 +99,4 @@ export default function buildDAG(
   }
 
   return buildTopoGraph(graph);
-};
+}

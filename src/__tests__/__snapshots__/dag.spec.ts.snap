@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`buildDAG should return ['e', 'f', 'a', 'b', 'd', 'c'] 1`] = `
+exports[`buildDAG should return correct built order 1`] = `
 Array [
   "e",
   "f",

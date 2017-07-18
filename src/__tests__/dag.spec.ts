@@ -1,7 +1,7 @@
 import buildDAG from "../dag";
 import { CyclusError } from "../utils";
 
-test("buildDAG should return ['e', 'f', 'a', 'b', 'd', 'c']", () => {
+test("buildDAG should return correct built order", () => {
   expect(
     buildDAG(
       {

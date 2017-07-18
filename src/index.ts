@@ -1,4 +1,5 @@
 import * as get from "lodash/get";
+import * as isNil from "lodash/isNil";
 import * as values from "lodash/values";
 import * as isArray from "lodash/isArray";
 import * as isPlainObject from "lodash/isPlainObject";
@@ -82,7 +83,7 @@ const NOT_FOUND = Symbol("NOT_FOUND");
 function getComponent(system: PlainObject, systemKey: string): Lifecycle {
   const component = get(system, systemKey, NOT_FOUND);
 
-  if (component === null || component === undefined) {
+  if (isNil(component)) {
     throw new CyclusInvalidComponentError(system, systemKey);
   }
 
@@ -104,7 +105,7 @@ function getDependency(
 ): any {
   const dependency = get(system, systemKey, NOT_FOUND);
 
-  if (dependency === null || dependency === undefined) {
+  if (isNil(dependency)) {
     throw new CyclusInvalidComponentError(system, systemKey);
   }
 
@@ -182,41 +183,56 @@ async function tryAction(
 }
 
 export class SystemMap {
+  static BUILT_ORDER_CACHE_KEY = "@cyclus/SystemMap/BUILT_ORDER";
+
   map: PlainObject;
-  private order: Array<string>;
-  private reversedOrder: Array<string>;
+  __metadata: {
+    __cache: PlainObject;
+  };
 
   constructor(map: PlainObject) {
     this.map = map;
+    this.__metadata = {
+      __cache: {}
+    };
+  }
+
+  __getCache(key: string) {
+    return this.__metadata.__cache[key];
+  }
+
+  __setCache(key: string, value: any) {
+    this.__metadata.__cache[key] = value;
+  }
+
+  __unsetCache(key: string) {
+    delete this.__metadata.__cache[key];
   }
 
   __getBuiltOrder(): Array<string> {
-    if (isArray(this.order)) {
-      return this.order;
+    const result = this.__getCache(SystemMap.BUILT_ORDER_CACHE_KEY);
+
+    if (!isNil(result)) {
+      return result;
     }
 
-    this.order = dependencyGraph(this.map);
-    return this.order;
+    const newResult = dependencyGraph(this.map);
+
+    this.__setCache(SystemMap.BUILT_ORDER_CACHE_KEY, newResult);
+
+    return newResult;
   }
 
   __getReversedBuiltOrder(): Array<string> {
-    if (isArray(this.reversedOrder)) {
-      return this.reversedOrder;
-    }
-
-    this.reversedOrder = this.__getBuiltOrder().reverse();
-    return this.reversedOrder;
+    return this.__getBuiltOrder().reverse();
   }
 
-  start(): Promise<any> {
-    return this.update(this.__getBuiltOrder(), "start");
+  static __filteredBuiltOrder(order: Array<string>, keys: Array<string>): Array<string> {
+    const set = new Set(keys);
+    return order.filter(systemKey => set.has(systemKey));
   }
 
-  stop(): Promise<any> {
-    return this.update(this.__getReversedBuiltOrder(), "stop");
-  }
-
-  async update(order: Array<string>, f: "start" | "stop"): Promise<any> {
+  async __update(order: Array<string>, f: "start" | "stop"): Promise<any> {
     for (const key of order) {
       const component = getComponent(this.map, key);
 
@@ -227,10 +243,30 @@ export class SystemMap {
     }
   }
 
+  start(): Promise<any> {
+    return this.__update(this.__getBuiltOrder(), "start");
+  }
+
+  stop(): Promise<any> {
+    return this.__update(this.__getReversedBuiltOrder(), "stop");
+  }
+
   async replace(newMap: PlainObject): Promise<any> {
-    await this.update(Object.keys(newMap), "stop");
+    await this.__update(
+      SystemMap.__filteredBuiltOrder(
+        this.__getReversedBuiltOrder(),
+        Object.keys(newMap)
+      ),
+      "stop"
+    );
+
     Object.assign(this.map, newMap);
-    await this.update(Object.keys(this.map), "start");
+    this.__unsetCache(SystemMap.BUILT_ORDER_CACHE_KEY);
+
+    await this.__update(
+      SystemMap.__filteredBuiltOrder(this.__getBuiltOrder(), Object.keys(this.map)),
+      "start"
+    );
   }
 
   toString() {
