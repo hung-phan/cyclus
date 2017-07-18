@@ -139,6 +139,45 @@ inverse of `start`; component dependencies will still be associated.
 system.start();
 ```
 
+### Simple system
+
+SystemMap can access object that is not an instance of LifeCycle component. Make sure you see all examples [here](https://github.com/hung-phan/cyclus/tree/master/examples)
+
+```typescript
+const system = new SystemMap({
+  inputChannel: csp.chan(1024),
+  resultChannel: csp.chan(1024),
+  db: new Database(config.database),
+  mailgun: new EmailService(config.mailgun),
+  worker: using(new Worker({ workFn: logAndSendEmails }), {
+    inputChannel: "inputChannel",
+    db: "db",
+    emailService: "mailgun",
+    resultChannel: "resultChannel"
+  }),
+  outgoingEmails: using(
+    new Queue(
+      Object.assign({}, config.outgoingEmails, {
+        outgoingMessagesChan: csp.chan()
+      })
+    ),
+    {
+      incomingMessagesChan: "inputChannel"
+    }
+  ),
+  sendEmails: using(
+    new Queue(
+      Object.assign({}, config.sendEmails, {
+        incomingMessagesChan: csp.chan()
+      })
+    ),
+    {
+      outgoingMessagesChan: "resultChannel"
+    }
+  )
+});
+```
+
 ### Replace
 
 To patch a running system, call replace on the system with given
