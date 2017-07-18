@@ -225,7 +225,7 @@ system.start();
 ### Raw access to component
 
 After component initialized, it will create a map at `.map` from `system`, this is intended for internal access only.
-This can be use do access component after they are started or stopped, but do not *modify* system.map directly, use
+This can be use to access component after they are started or stopped, but do not *modify* system.map directly, use
 `replace` instead.
 
 ```typescript
