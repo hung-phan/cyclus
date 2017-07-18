@@ -67,9 +67,7 @@ export function using(
   }
 
   if (isArray(dependencies)) {
-    dependencies = (dependencies as Array<
-      string
-    >).reduce((result, dependency) => {
+    dependencies = (dependencies as Array<string>).reduce((result, dependency) => {
       result[dependency] = dependency;
       return result;
     }, {});
@@ -125,9 +123,7 @@ function getDependency(
   return dependency;
 }
 
-function dependencyGraph(
-  system: PlainObject
-): Array<string> {
+function dependencyGraph(system: PlainObject): Array<string> {
   const dependencyArray = Object.keys(system).reduce((result, key) => {
     const component = system[key];
 
