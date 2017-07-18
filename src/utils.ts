@@ -27,3 +27,19 @@ export class CyclusNotImplemented extends Error {
     super(`Not implemented`);
   }
 }
+
+export function get(obj: Object, key: string, defaultVal: any): any {
+  if (key in obj) {
+    return obj[key];
+  }
+
+  return defaultVal;
+}
+
+export function values(obj: Object): Array<any> {
+  return Object.keys(obj).map(key => obj[key]);
+}
+
+export function isObject(obj: Object): boolean {
+  return obj != null && typeof obj === 'object' && Array.isArray(obj) === false;
+}

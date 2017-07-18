@@ -1,12 +1,10 @@
-import * as get from "lodash/get";
-import * as isNil from "lodash/isNil";
-import * as values from "lodash/values";
-import * as isArray from "lodash/isArray";
-import * as isPlainObject from "lodash/isPlainObject";
 import {
   CyclusError,
   CyclusInvalidComponentError,
-  CyclusNotImplemented
+  CyclusNotImplemented,
+  get,
+  values,
+  isObject
 } from "./utils";
 import { PlainObject } from "./types";
 import buildDAG from "./dag";
@@ -47,7 +45,11 @@ export class Lifecycle {
  * Returns the map of other components on which this component depends.
  */
 function dependencies(component: Lifecycle): PlainObject {
-  return get(component, "__metadata.dependencies", {});
+  if (!(component instanceof Lifecycle)) {
+    return {};
+  }
+
+  return component.__metadata.dependencies;
 }
 
 /**
@@ -63,11 +65,11 @@ export function using(
   component: Lifecycle,
   dependencies: Array<string> | PlainObject
 ): Lifecycle {
-  if (!isArray(dependencies) && !isPlainObject(dependencies)) {
+  if (!Array.isArray(dependencies) && !isObject(dependencies)) {
     throw new CyclusError("Invalid dependencies", { component, dependencies });
   }
 
-  if (isArray(dependencies)) {
+  if (Array.isArray(dependencies)) {
     dependencies = (dependencies as Array<string>).reduce((result, dependency) => {
       result[dependency] = dependency;
       return result;
@@ -83,7 +85,7 @@ const NOT_FOUND = Symbol("NOT_FOUND");
 function getComponent(system: PlainObject, systemKey: string): Lifecycle {
   const component = get(system, systemKey, NOT_FOUND);
 
-  if (isNil(component)) {
+  if (component === null || component === undefined) {
     throw new CyclusInvalidComponentError(system, systemKey);
   }
 
@@ -105,7 +107,7 @@ function getDependency(
 ): any {
   const dependency = get(system, systemKey, NOT_FOUND);
 
-  if (isNil(dependency)) {
+  if (dependency === null || dependency === undefined) {
     throw new CyclusInvalidComponentError(system, systemKey);
   }
 
@@ -212,7 +214,7 @@ export class SystemMap {
   __getBuiltOrder(): Array<string> {
     const result = this.__getCache(SystemMap.BUILT_ORDER_CACHE_KEY);
 
-    if (!isNil(result)) {
+    if (result !== null && result !== undefined) {
       return result;
     }
 

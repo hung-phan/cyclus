@@ -1,5 +1,4 @@
 import buildDAG from "../dag";
-import { CyclusError } from "../utils";
 
 test("buildDAG should return correct built order", () => {
   expect(

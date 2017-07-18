@@ -2,11 +2,11 @@
 
 exports[`buildDAG should return correct built order 1`] = `
 Array [
-  "e",
   "f",
   "a",
   "b",
   "d",
   "c",
+  "e",
 ]
 `;

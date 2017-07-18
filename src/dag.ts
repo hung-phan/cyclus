@@ -1,5 +1,3 @@
-import * as omit from "lodash/omit";
-import * as mapValues from "lodash/mapValues";
 import { PlainObject } from "./types";
 import { CyclusError } from "./utils";
 
@@ -44,20 +42,13 @@ class Node {
 
 type Graph = { [key: string]: Node };
 
-function getNodeWithoutParentOrChild(graph: Graph): Array<string> {
-  return Object.keys(graph).filter(
-    key =>
-      graph[key].incomingNodes.size === 0 && graph[key].outgoingNodes.size === 0
-  );
-}
-
 function getNodeWithoutParent(graph: Graph): Array<string> {
   return Object.keys(graph).filter(key => graph[key].incomingNodes.size === 0);
 }
 
 function buildTopoGraph(graph: Graph): Array<string> {
-  const result = getNodeWithoutParentOrChild(graph);
-  const nodeWithoutParent = getNodeWithoutParent(omit(graph, result));
+  const result = [];
+  const nodeWithoutParent = getNodeWithoutParent(graph);
 
   while (nodeWithoutParent.length !== 0) {
     const node: Node = graph[nodeWithoutParent.pop()];
@@ -85,10 +76,11 @@ export default function buildDAG(
   system: PlainObject,
   dependencyArray: Array<[string, string]>
 ): Array<string> {
-  const graph: Graph = mapValues(
-    system,
-    (_: any, key: string) => new Node(key)
-  );
+  const graph: Graph = {};
+
+  Object.keys(system).forEach(key => {
+    graph[key] = new Node(key);
+  });
 
   for (const [parent, child] of dependencyArray) {
     const parentNode = graph[parent];
