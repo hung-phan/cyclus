@@ -2,8 +2,8 @@
 
 [![build status](https://secure.travis-ci.org/hung-phan/cyclus.svg)](http://travis-ci.org/hung-phan/cyclus/)
 [![codecov](https://codecov.io/gh/hung-phan/cyclus/branch/master/graph/badge.svg)](https://codecov.io/gh/hung-phan/cyclus)
-[![Dependency Status](https://david-dm.org/hung-phan/cyclus.svg)](https://david-dm.org/hung-phan/cyclus)
-[![devDependency Status](https://david-dm.org/hung-phan/cyclus/dev-status.svg)](https://david-dm.org/hung-phan/cyclus#info=devDependencies)
+[![dependencies Status](https://david-dm.org/hung-phan/cyclus/status.svg)](https://david-dm.org/hung-phan/cyclus)
+[![devDependencies Status](https://david-dm.org/hung-phan/cyclus/dev-status.svg)](https://david-dm.org/hung-phan/cyclus?type=dev)
 
 'Cyclus' is a tiny lib for managing the lifecycle and dependencies of software components which have runtime state.
 
