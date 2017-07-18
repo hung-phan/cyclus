@@ -1,9 +1,7 @@
-import { PlainObject } from "./types";
-
 export class CyclusError extends Error {
-  data: PlainObject;
+  data: Object;
 
-  constructor(message: string, data: PlainObject) {
+  constructor(message: string, data: Object) {
     super(message);
 
     this.data = data;
@@ -11,7 +9,7 @@ export class CyclusError extends Error {
 }
 
 export class CyclusInvalidComponentError extends CyclusError {
-  constructor(system: PlainObject, systemKey: string) {
+  constructor(system: Object, systemKey: string) {
     super(
       `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
       {

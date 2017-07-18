@@ -1,4 +1,3 @@
-import { PlainObject } from "./types";
 import { CyclusError } from "./utils";
 
 class Node {
@@ -73,7 +72,7 @@ function buildTopoGraph(graph: Graph): Array<string> {
 }
 
 export default function buildDAG(
-  system: PlainObject,
+  system: Object,
   dependencyArray: Array<[string, string]>
 ): Array<string> {
   const graph: Graph = {};

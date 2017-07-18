@@ -6,13 +6,12 @@ import {
   values,
   isObject
 } from "./utils";
-import { PlainObject } from "./types";
 import buildDAG from "./dag";
 
 export class Lifecycle {
   __metadata: {
     isInitialised: boolean;
-    dependencies: PlainObject;
+    dependencies: Object;
   };
 
   constructor() {
@@ -44,7 +43,7 @@ export class Lifecycle {
 /**
  * Returns the map of other components on which this component depends.
  */
-function dependencies(component: Lifecycle): PlainObject {
+function dependencies(component: Lifecycle): Object {
   if (!(component instanceof Lifecycle)) {
     return {};
   }
@@ -63,7 +62,7 @@ function dependencies(component: Lifecycle): PlainObject {
  */
 export function using(
   component: Lifecycle,
-  dependencies: Array<string> | PlainObject
+  dependencies: Array<string> | Object
 ): Lifecycle {
   if (!Array.isArray(dependencies) && !isObject(dependencies)) {
     throw new CyclusError("Invalid dependencies", { component, dependencies });
@@ -82,7 +81,7 @@ export function using(
 
 const NOT_FOUND = Symbol("NOT_FOUND");
 
-function getComponent(system: PlainObject, systemKey: string): Lifecycle {
+function getComponent(system: Object, systemKey: string): Lifecycle {
   const component = get(system, systemKey, NOT_FOUND);
 
   if (component === null || component === undefined) {
@@ -100,7 +99,7 @@ function getComponent(system: PlainObject, systemKey: string): Lifecycle {
 }
 
 function getDependency(
-  system: PlainObject,
+  system: Object,
   systemKey: string,
   component: Lifecycle,
   dependencyKey: string
@@ -126,7 +125,7 @@ function getDependency(
   return dependency;
 }
 
-function dependencyGraph(system: PlainObject): Array<string> {
+function dependencyGraph(system: Object): Array<string> {
   const dependencyArray = Object.keys(system).reduce((result, key) => {
     const component = system[key];
 
@@ -140,7 +139,7 @@ function dependencyGraph(system: PlainObject): Array<string> {
   return buildDAG(system, dependencyArray);
 }
 
-function assocDependencies(component: Lifecycle, system: PlainObject) {
+function assocDependencies(component: Lifecycle, system: Object) {
   const metadataDependencies = dependencies(component);
 
   Object.keys(metadataDependencies).forEach(key => {
@@ -155,7 +154,7 @@ function assocDependencies(component: Lifecycle, system: PlainObject) {
 
 async function tryAction(
   component: Lifecycle,
-  system: PlainObject,
+  system: Object,
   systemKey: string,
   f: "start" | "stop"
 ): Promise<any> {
@@ -187,12 +186,12 @@ async function tryAction(
 export class SystemMap {
   static BUILT_ORDER_CACHE_KEY = "@cyclus/SystemMap/BUILT_ORDER";
 
-  map: PlainObject;
+  map: Object;
   __metadata: {
-    __cache: PlainObject;
+    __cache: Object;
   };
 
-  constructor(map: PlainObject) {
+  constructor(map: Object) {
     this.map = map;
     this.__metadata = {
       __cache: {}
@@ -253,7 +252,7 @@ export class SystemMap {
     return this.__update(this.__getReversedBuiltOrder(), "stop");
   }
 
-  async replace(newMap: PlainObject): Promise<any> {
+  async replace(newMap: Object): Promise<any> {
     await this.__update(
       SystemMap.__filteredBuiltOrder(
         this.__getReversedBuiltOrder(),

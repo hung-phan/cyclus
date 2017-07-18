@@ -1,5 +1,4 @@
 import { Lifecycle, SystemMap, using } from "..";
-import { PlainObject } from "../types";
 
 describe("cyclus", () => {
   function timeout(ms): Promise<void> {
@@ -204,7 +203,7 @@ describe("cyclus", () => {
 
   describe("simple component", () => {
     class Component extends Lifecycle {
-      config: PlainObject;
+      config: Object;
 
       start() {
         order.push("Start component 3");
