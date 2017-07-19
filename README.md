@@ -202,7 +202,7 @@ system.replace({ database: createNewDatabase() }, { shouldRestart: true });
 This will automatically `stop` previous version of the database, and `start` a new one. Example for reloadable app
 under example/reloadable-system
 
-![alt text](https://raw.githubusercontent.com/hung-phan/cyclus/master/reloadable-system.png "reloadable-system")
+![alt text](https://raw.githubusercontent.com/hung-phan/cyclus/master/reloadable-system.gif "reloadable-system")
 
 ### Promise
 
