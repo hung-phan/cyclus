@@ -352,6 +352,99 @@ Array [
 ]
 `;
 
+exports[`cyclus replacing dependencies on the fly should work for some components that are not in system before 1`] = `
+SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "emailService",
+        "scheduler",
+        "newExampleComponent",
+        "database",
+        "exampleComponent",
+      ],
+    },
+  },
+  "map": Object {
+    "database": Database {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "dbConnection": "OPENED",
+    },
+    "emailService": EmailService {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "database",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": true,
+      },
+      "database": Database {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "dbConnection": "OPENED",
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "tick": 10,
+      },
+    },
+    "newExampleComponent": NewExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "emailService": "emailService",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": true,
+      },
+      "emailService": EmailService {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "tick": 10,
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "tick": 10,
+    },
+  },
+}
+`;
+
+exports[`cyclus replacing dependencies on the fly should work for some components that are not in system before 2`] = `
+Array [
+  "Start Scheduler",
+  "Start Database",
+  "Start ExampleComponent",
+  "Start EmailService",
+  "Start NewExampleComponent",
+]
+`;
+
 exports[`cyclus replacing dependencies on the fly should work for test use case 1`] = `
 Array [
   "Start Scheduler",

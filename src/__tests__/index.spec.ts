@@ -2,7 +2,7 @@ import { Lifecycle, SystemMap, using } from "..";
 
 describe("cyclus", () => {
   function timeout(ms: number): Promise<{}> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(resolve, ms);
     });
   }
@@ -61,24 +61,48 @@ describe("cyclus", () => {
     }
   }
 
-  const createDatabase = (): Lifecycle => new Database();
-  const createNewDatabase = (): Lifecycle => new NewDatabase();
-  const createScheduler = (): Lifecycle => new Scheduler();
-  const createExampleComponent = (): Lifecycle => new ExampleComponent();
+  class EmailService extends Lifecycle {
+    public start() {
+      order.push("Start EmailService");
+    }
 
-  let order: string[];
-  let system: SystemMap;
+    public stop() {
+      order.push("Stop EmailService");
+    }
+
+    public send(message: string): void {
+      emailServiceMock(`I am sending ${message}`);
+    }
+  }
+
+  class NewExampleComponent extends Lifecycle {
+    private emailService: EmailService;
+    private scheduler: Scheduler;
+
+    public start() {
+      order.push("Start NewExampleComponent");
+    }
+
+    public stop() {
+      order.push("Stop NewExampleComponent");
+    }
+  }
+
+  let order;
+  let system;
+  let emailServiceMock;
 
   beforeEach(() => {
     order = [];
+    emailServiceMock = jest.fn();
   });
 
   describe("lifecycle", () => {
     beforeEach(async () => {
       system = new SystemMap({
-        database: createDatabase(),
-        scheduler: createScheduler(),
-        exampleComponent: using(createExampleComponent(), [
+        database: new Database(),
+        scheduler: new Scheduler(),
+        exampleComponent: using(new ExampleComponent(), [
           "database",
           "scheduler"
         ])
@@ -110,16 +134,15 @@ describe("cyclus", () => {
   describe("injecting dependencies correctly", () => {
     it("should work with map", async () => {
       system = new SystemMap({
-        db: createDatabase(),
-        sched: createScheduler(),
-        exampleComponent: using(createExampleComponent(), {
+        db: new Database(),
+        sched: new Scheduler(),
+        exampleComponent: using(new ExampleComponent(), {
           database: "db",
           scheduler: "sched"
         })
       });
 
       await system.start();
-
       expect(system).toMatchSnapshot();
     });
   });
@@ -127,42 +150,40 @@ describe("cyclus", () => {
   describe("replacing dependencies on the fly", () => {
     it("should replace but not start or stop any component", async () => {
       system = new SystemMap({
-        database: createDatabase(),
-        scheduler: createScheduler(),
-        exampleComponent: using(createExampleComponent(), [
+        database: new Database(),
+        scheduler: new Scheduler(),
+        exampleComponent: using(new ExampleComponent(), [
           "database",
           "scheduler"
         ])
       });
 
       expect(system).toMatchSnapshot();
-      await system.replace({ database: createNewDatabase() });
+      await system.replace({ database: new NewDatabase() });
       expect(system).toMatchSnapshot();
-
       expect(order).toMatchSnapshot();
     });
 
     it("should work for test use case", async () => {
       system = new SystemMap({
-        database: createDatabase(),
-        scheduler: createScheduler(),
-        exampleComponent: using(createExampleComponent(), [
+        database: new Database(),
+        scheduler: new Scheduler(),
+        exampleComponent: using(new ExampleComponent(), [
           "database",
           "scheduler"
         ])
       });
 
-      await system.replace({ database: createNewDatabase() });
+      await system.replace({ database: new NewDatabase() });
       await system.start();
-
       expect(order).toMatchSnapshot();
     });
 
     it("should restart correctly", async () => {
       system = new SystemMap({
-        database: createDatabase(),
-        scheduler: createScheduler(),
-        exampleComponent: using(createExampleComponent(), [
+        database: new Database(),
+        scheduler: new Scheduler(),
+        exampleComponent: using(new ExampleComponent(), [
           "database",
           "scheduler"
         ])
@@ -171,9 +192,37 @@ describe("cyclus", () => {
       await system.start();
 
       expect(system).toMatchSnapshot();
-      await system.replace({ database: createNewDatabase() }, { shouldRestart: true });
+      await system.replace(
+        { database: new NewDatabase() },
+        { shouldRestart: true }
+      );
       expect(system).toMatchSnapshot();
+      expect(order).toMatchSnapshot();
+    });
 
+    it("should work for some components that are not in system before", async () => {
+      system = new SystemMap({
+        database: new Database(),
+        scheduler: new Scheduler(),
+        exampleComponent: using(new ExampleComponent(), [
+          "database",
+          "scheduler"
+        ])
+      });
+
+      await system.start();
+      await system.replace(
+        {
+          emailService: new EmailService(),
+          newExampleComponent: using(new NewExampleComponent(), [
+            "emailService",
+            "scheduler"
+          ])
+        },
+        { shouldRestart: true }
+      );
+
+      expect(system).toMatchSnapshot();
       expect(order).toMatchSnapshot();
     });
   });
