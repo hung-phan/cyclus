@@ -193,7 +193,7 @@ Calling replace with given hashmap of new dependencies
 system.replace({ database: createNewDatabase() });
 ```
 
-#### For patching a already running system
+#### For patching an already running system
 
 ```typescript
 system.replace({ database: createNewDatabase() }, { shouldRestart: true });
