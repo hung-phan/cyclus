@@ -142,6 +142,22 @@ describe("cyclus", () => {
       expect(order).toMatchSnapshot();
     });
 
+    it("should work for test use case", async () => {
+      system = new SystemMap({
+        database: createDatabase(),
+        scheduler: createScheduler(),
+        exampleComponent: using(createExampleComponent(), [
+          "database",
+          "scheduler"
+        ])
+      });
+
+      await system.replace({ database: createNewDatabase() });
+      await system.start();
+
+      expect(order).toMatchSnapshot();
+    });
+
     it("should restart correctly", async () => {
       system = new SystemMap({
         database: createDatabase(),

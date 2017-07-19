@@ -352,6 +352,14 @@ Array [
 ]
 `;
 
+exports[`cyclus replacing dependencies on the fly should work for test use case 1`] = `
+Array [
+  "Start Scheduler",
+  "Start NewDatabase",
+  "Start ExampleComponent",
+]
+`;
+
 exports[`cyclus simple component should able to replace the config on the fly 1`] = `
 SystemMap {
   "__metadata": Object {
