@@ -1,7 +1,7 @@
 export class CyclusError extends Error {
-  data: Object;
+  public data: object;
 
-  constructor(message: string, data: Object) {
+  constructor(message: string, data: object) {
     super(message);
 
     this.data = data;
@@ -9,7 +9,7 @@ export class CyclusError extends Error {
 }
 
 export class CyclusInvalidComponentError extends CyclusError {
-  constructor(system: Object, systemKey: string) {
+  constructor(system: object, systemKey: string) {
     super(
       `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
       {
@@ -26,7 +26,7 @@ export class CyclusNotImplemented extends Error {
   }
 }
 
-export function get(obj: Object, key: string, defaultVal: any): any {
+export function get(obj: object, key: string, defaultVal: any): any {
   if (key in obj) {
     return obj[key];
   }
@@ -34,10 +34,10 @@ export function get(obj: Object, key: string, defaultVal: any): any {
   return defaultVal;
 }
 
-export function values(obj: Object): Array<any> {
-  return Object.keys(obj).map(key => obj[key]);
+export function values(obj: object): any[] {
+  return Object.keys(obj).map((key) => obj[key]);
 }
 
-export function isObject(obj: Object): boolean {
-  return obj != null && typeof obj === 'object' && Array.isArray(obj) === false;
+export function isObject(obj: object): boolean {
+  return obj != null && typeof obj === "object" && Array.isArray(obj) === false;
 }

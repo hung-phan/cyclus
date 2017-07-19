@@ -1,12 +1,12 @@
 import { CyclusError } from "./utils";
 
 class Node {
-  static INCOMING = "INCOMING";
-  static OUTGOING = "OUTGOING";
+  public static INCOMING = "INCOMING";
+  public static OUTGOING = "OUTGOING";
 
-  key: string;
-  incomingNodes: Set<Node>;
-  outgoingNodes: Set<Node>;
+  public readonly key: string;
+  public readonly incomingNodes: Set<Node>;
+  public readonly outgoingNodes: Set<Node>;
 
   constructor(key: string) {
     this.key = key;
@@ -14,7 +14,7 @@ class Node {
     this.outgoingNodes = new Set();
   }
 
-  addNode(type: string, node: Node) {
+  public addNode(type: string, node: Node) {
     switch (type) {
       case Node.INCOMING:
         this.incomingNodes.add(node);
@@ -26,7 +26,7 @@ class Node {
     }
   }
 
-  removeNode(type: string, node: Node) {
+  public removeNode(type: string, node: Node) {
     switch (type) {
       case Node.INCOMING:
         this.incomingNodes.delete(node);
@@ -39,13 +39,15 @@ class Node {
   }
 }
 
-type Graph = { [key: string]: Node };
-
-function getNodeWithoutParent(graph: Graph): Array<string> {
-  return Object.keys(graph).filter(key => graph[key].incomingNodes.size === 0);
+interface IGraph {
+  [key: string]: Node;
 }
 
-function buildTopoGraph(graph: Graph): Array<string> {
+function getNodeWithoutParent(graph: IGraph): string[] {
+  return Object.keys(graph).filter((key) => graph[key].incomingNodes.size === 0);
+}
+
+function buildTopoGraph(graph: IGraph): string[] {
   const result = [];
   const nodeWithoutParent = getNodeWithoutParent(graph);
 
@@ -54,7 +56,7 @@ function buildTopoGraph(graph: Graph): Array<string> {
 
     result.push(node.key);
 
-    node.outgoingNodes.forEach(connectedNode => {
+    node.outgoingNodes.forEach((connectedNode) => {
       node.removeNode(Node.OUTGOING, connectedNode);
       connectedNode.removeNode(Node.INCOMING, node);
 
@@ -71,13 +73,10 @@ function buildTopoGraph(graph: Graph): Array<string> {
   return result;
 }
 
-export default function buildDAG(
-  system: Object,
-  dependencyArray: Array<[string, string]>
-): Array<string> {
-  const graph: Graph = {};
+export default function buildDAG(system: object, dependencyArray: Array<[string, string]>): string[] {
+  const graph: IGraph = {};
 
-  Object.keys(system).forEach(key => {
+  Object.keys(system).forEach((key) => {
     graph[key] = new Node(key);
   });
 

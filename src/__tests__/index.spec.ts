@@ -1,61 +1,61 @@
 import { Lifecycle, SystemMap, using } from "..";
 
 describe("cyclus", () => {
-  function timeout(ms): Promise<void> {
-    return new Promise(resolve => {
+  function timeout(ms): Promise<{}> {
+    return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
   }
 
   class Database extends Lifecycle {
-    dbConnection: string;
+    public dbConnection: string;
 
-    start() {
+    public start() {
       order.push("Start Database");
       this.dbConnection = "OPENED";
     }
 
-    stop() {
+    public stop() {
       order.push("Stop Database");
       this.dbConnection = "CLOSED";
     }
   }
 
   class Scheduler extends Lifecycle {
-    tick: number;
+    public tick: number;
 
-    start() {
+    public start() {
       order.push("Start Scheduler");
       this.tick = 10;
     }
 
-    stop() {
+    public stop() {
       order.push("Stop Scheduler");
     }
   }
 
   class ExampleComponent extends Lifecycle {
-    database: Database;
-    scheduler: Scheduler;
+    private database: Database;
+    private scheduler: Scheduler;
 
-    start() {
+    public start() {
       order.push("Start ExampleComponent");
     }
 
-    stop() {
+    public stop() {
       order.push("Stop ExampleComponent");
     }
   }
 
   class NewDatabase extends Lifecycle {
-    dbConnection: string;
+    public dbConnection: string;
 
-    start() {
+    public start() {
       order.push("Start NewDatabase");
       this.dbConnection = "OPENED";
     }
 
-    stop() {
+    public stop() {
       order.push("Stop NewDatabase");
       this.dbConnection = "CLOSED";
     }
@@ -66,7 +66,7 @@ describe("cyclus", () => {
   const createScheduler = (): Lifecycle => new Scheduler();
   const createExampleComponent = (): Lifecycle => new ExampleComponent();
 
-  let order: Array<string>;
+  let order: string[];
   let system: SystemMap;
 
   beforeEach(() => {
@@ -108,7 +108,7 @@ describe("cyclus", () => {
   });
 
   describe("injecting dependencies correctly", () => {
-    it("'should work with map", async () => {
+    it("should work with map", async () => {
       system = new SystemMap({
         db: createDatabase(),
         sched: createScheduler(),
@@ -125,7 +125,7 @@ describe("cyclus", () => {
   });
 
   describe("replacing dependencies on the fly", () => {
-    it("'should work correctly", async () => {
+    it("should work correctly", async () => {
       system = new SystemMap({
         database: createDatabase(),
         scheduler: createScheduler(),
@@ -143,42 +143,61 @@ describe("cyclus", () => {
 
       expect(order).toMatchSnapshot();
     });
+    //
+    // it("should not restart the system when given { shouldRestart: false }", async () => {
+    //   system = new SystemMap({
+    //     database: createDatabase(),
+    //     scheduler: createScheduler(),
+    //     exampleComponent: using(createExampleComponent(), [
+    //       "database",
+    //       "scheduler"
+    //     ])
+    //   });
+    //
+    //   await system.start();
+    //
+    //   expect(system).toMatchSnapshot();
+    //   await system.replace({ database: createNewDatabase() }, { shouldRestart: false });
+    //   expect(system).toMatchSnapshot();
+    //
+    //   expect(order).toMatchSnapshot();
+    // });
   });
 
   describe("async", () => {
     class Component1 extends Lifecycle {
-      async start() {
+      public async start() {
         await timeout(100);
         order.push("Start component 1 after 1000");
       }
 
-      async stop() {
+      public async stop() {
         await timeout(100);
         order.push("Stop component 1 after 1000");
       }
     }
 
     class Component2 extends Lifecycle {
-      async start() {
+      public async start() {
         await timeout(200);
         order.push("Start component 2 after 2000");
       }
 
-      async stop() {
+      public async stop() {
         await timeout(200);
         order.push("Stop component 2 after 2000");
       }
     }
 
     class Component3 extends Lifecycle {
-      component1: Component1;
-      component2: Component2;
+      private component1: Component1;
+      private component2: Component2;
 
-      start() {
+      public start() {
         order.push("Start component 3");
       }
 
-      stop() {
+      public stop() {
         order.push("Stop component 3");
       }
     }
@@ -187,7 +206,7 @@ describe("cyclus", () => {
     const createComponent2 = (): Lifecycle => new Component2();
     const createComponent3 = (): Lifecycle => new Component3();
 
-    it("'should wait for start or stop method to resolve", async () => {
+    it("should wait for start or stop method to resolve", async () => {
       system = new SystemMap({
         component1: createComponent1(),
         component2: createComponent2(),
@@ -203,13 +222,13 @@ describe("cyclus", () => {
 
   describe("simple component", () => {
     class Component extends Lifecycle {
-      config: Object;
+      private config: object;
 
-      start() {
+      public start() {
         order.push("Start component 3");
       }
 
-      stop() {
+      public stop() {
         order.push("Stop component 3");
       }
     }
