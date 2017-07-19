@@ -8,13 +8,11 @@
   },
   "devDependencies": {
     "@types/jest": "^20.0.4",
-    "invariant": "^2.2.2",
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
     "ts-node": "^3.2.0",
     "tslint": "^5.5.0",
-    "typescript": "^2.4.1",
-    "webpack": "^3.3.0"
+    "typescript": "^2.4.1"
   },
   "engines": {
     "node": ">= 4.1.0",
@@ -44,6 +42,11 @@
   },
   "jsnext:main": "dist/esnext/index.js",
   "license": "MIT",
+  "keywords": [
+    "dependency injection",
+    "inversion of control",
+    "lifecycle"
+  ],
   "main": "dist/es6/index.js",
   "module": "dist/esnext/index.js",
   "scripts": {

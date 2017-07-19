@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "target": "es6",
     "declaration": true,
     "module": "commonjs",
     "moduleResolution": "node",
@@ -11,11 +12,11 @@
     "typeRoots" : [
       "node_modules/@types"
     ],
+    "outDir": "dist",
     "lib": ["es2017", "dom"],
     "sourceMap": true
   },
   "exclude": [
-    "examples",
     "node_modules"
   ]
 }

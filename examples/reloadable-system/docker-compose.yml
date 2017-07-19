@@ -1,0 +1,16 @@
+version: '2'
+services:
+  postgres:
+    container_name: dev_postgres
+    image: postgres:9.6.1
+    environment:
+      - POSTGRES_USER=developer
+      - POSTGRES_PASSWORD=developer
+      - POSTGRES_DB=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - dev_postgres:/var/lib/postgresql/data
+volumes:
+  dev_postgres:
+    driver: local
