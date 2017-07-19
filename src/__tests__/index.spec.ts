@@ -1,7 +1,7 @@
 import { Lifecycle, SystemMap, using } from "..";
 
 describe("cyclus", () => {
-  function timeout(ms): Promise<{}> {
+  function timeout(ms: number): Promise<{}> {
     return new Promise((resolve) => {
       setTimeout(resolve, ms);
     });
@@ -125,7 +125,24 @@ describe("cyclus", () => {
   });
 
   describe("replacing dependencies on the fly", () => {
-    it("should work correctly", async () => {
+    it("should replace but not start or stop any component", async () => {
+      system = new SystemMap({
+        database: createDatabase(),
+        scheduler: createScheduler(),
+        exampleComponent: using(createExampleComponent(), [
+          "database",
+          "scheduler"
+        ])
+      });
+
+      expect(system).toMatchSnapshot();
+      await system.replace({ database: createNewDatabase() });
+      expect(system).toMatchSnapshot();
+
+      expect(order).toMatchSnapshot();
+    });
+
+    it("should restart correctly", async () => {
       system = new SystemMap({
         database: createDatabase(),
         scheduler: createScheduler(),
@@ -138,30 +155,11 @@ describe("cyclus", () => {
       await system.start();
 
       expect(system).toMatchSnapshot();
-      await system.replace({ database: createNewDatabase() });
+      await system.replace({ database: createNewDatabase() }, { shouldRestart: true });
       expect(system).toMatchSnapshot();
 
       expect(order).toMatchSnapshot();
     });
-    //
-    // it("should not restart the system when given { shouldRestart: false }", async () => {
-    //   system = new SystemMap({
-    //     database: createDatabase(),
-    //     scheduler: createScheduler(),
-    //     exampleComponent: using(createExampleComponent(), [
-    //       "database",
-    //       "scheduler"
-    //     ])
-    //   });
-    //
-    //   await system.start();
-    //
-    //   expect(system).toMatchSnapshot();
-    //   await system.replace({ database: createNewDatabase() }, { shouldRestart: false });
-    //   expect(system).toMatchSnapshot();
-    //
-    //   expect(order).toMatchSnapshot();
-    // });
   });
 
   describe("async", () => {

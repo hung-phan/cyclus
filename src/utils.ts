@@ -9,11 +9,11 @@ export class CyclusError extends Error {
 }
 
 export class CyclusInvalidComponentError extends CyclusError {
-  constructor(system: object, systemKey: string) {
+  constructor(systemMap: object, systemKey: string) {
     super(
       `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
       {
-        system,
+        systemMap,
         systemKey
       }
     );

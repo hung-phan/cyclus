@@ -185,19 +185,21 @@ const system = new SystemMap({
 
 ### Replace
 
-To patch a running system, call replace on the system with given hashmap of new dependencies.
+Calling replace with given hashmap of new dependencies
+
+#### For testing
 
 ```typescript
 system.replace({ database: createNewDatabase() });
 ```
 
-This will automatically `stop` previous version of the database, and `start` a new one.
-If you can also supply `shouldRestart` params to prevent `stop` then `start` all components. This behaviour is useful
-in testing.
+#### For patching a already running system
 
 ```typescript
-system.replace({ database: createNewDatabase() }, { shouldRestart: false });
+system.replace({ database: createNewDatabase() }, { shouldRestart: true });
 ```
+
+This will automatically `stop` previous version of the database, and `start` a new one.
 
 ### Promise
 

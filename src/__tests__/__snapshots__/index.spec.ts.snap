@@ -148,7 +148,95 @@ Array [
 ]
 `;
 
-exports[`cyclus replacing dependencies on the fly should work correctly 1`] = `
+exports[`cyclus replacing dependencies on the fly should replace but not start or stop any component 1`] = `
+SystemMap {
+  "__metadata": Object {
+    "__cache": Object {},
+  },
+  "map": Object {
+    "database": Database {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": false,
+      },
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "database",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": false,
+      },
+      "database": Database {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": false,
+        },
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": false,
+        },
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": false,
+      },
+    },
+  },
+}
+`;
+
+exports[`cyclus replacing dependencies on the fly should replace but not start or stop any component 2`] = `
+SystemMap {
+  "__metadata": Object {
+    "__cache": Object {},
+  },
+  "map": Object {
+    "database": NewDatabase {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": false,
+      },
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "database",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": false,
+      },
+      "database": NewDatabase {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": false,
+        },
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": false,
+        },
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": false,
+      },
+    },
+  },
+}
+`;
+
+exports[`cyclus replacing dependencies on the fly should replace but not start or stop any component 3`] = `Array []`;
+
+exports[`cyclus replacing dependencies on the fly should restart correctly 1`] = `
 SystemMap {
   "__metadata": Object {
     "__cache": Object {
@@ -201,7 +289,7 @@ SystemMap {
 }
 `;
 
-exports[`cyclus replacing dependencies on the fly should work correctly 2`] = `
+exports[`cyclus replacing dependencies on the fly should restart correctly 2`] = `
 SystemMap {
   "__metadata": Object {
     "__cache": Object {
@@ -254,7 +342,7 @@ SystemMap {
 }
 `;
 
-exports[`cyclus replacing dependencies on the fly should work correctly 3`] = `
+exports[`cyclus replacing dependencies on the fly should restart correctly 3`] = `
 Array [
   "Start Scheduler",
   "Start Database",
@@ -267,12 +355,7 @@ Array [
 exports[`cyclus simple component should able to replace the config on the fly 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
-      "@cyclus/SystemMap/BUILT_ORDER": Array [
-        "config",
-        "component",
-      ],
-    },
+    "__cache": Object {},
   },
   "map": Object {
     "component": Component {

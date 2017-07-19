@@ -22,7 +22,7 @@ export class Lifecycle implements ILifecycle {
   constructor() {
     this.__metadata = {
       dependencies: {},
-      isInitialised: false,
+      isInitialised: false
     };
   }
 
@@ -48,7 +48,7 @@ export class Lifecycle implements ILifecycle {
 /**
  * Returns the map of other components on which this component depends.
  */
-function dependencies(component: Lifecycle): { [key: string]: string } {
+function dependencies(component: any): { [key: string]: string } {
   if (!(component instanceof Lifecycle)) {
     return {};
   }
@@ -70,14 +70,20 @@ export function using(
   systemDependencies: string[] | { [key: string]: string }
 ): Lifecycle {
   if (!Array.isArray(systemDependencies) && !isObject(systemDependencies)) {
-    throw new CyclusError("Invalid dependencies", { component, systemDependencies });
+    throw new CyclusError("Invalid dependencies", {
+      component,
+      systemDependencies
+    });
   }
 
   if (Array.isArray(systemDependencies)) {
-    systemDependencies = (systemDependencies as string[]).reduce((result, dependency) => {
-      result[dependency] = dependency;
-      return result;
-    }, {});
+    systemDependencies = (systemDependencies as string[]).reduce(
+      (result, dependency) => {
+        result[dependency] = dependency;
+        return result;
+      },
+      {}
+    );
   }
 
   component.__metadata.dependencies = systemDependencies;
@@ -86,7 +92,7 @@ export function using(
 
 const NOT_FOUND = Symbol("NOT_FOUND");
 
-function getComponent(systemMap: { [key: string]: any }, systemKey: string): Lifecycle {
+function getComponent(systemMap: object, systemKey: string): any {
   const component = get(systemMap, systemKey, NOT_FOUND);
 
   if (component === null || component === undefined) {
@@ -130,9 +136,9 @@ function getDependency(
   return dependency;
 }
 
-function dependencyGraph(system: object): string[] {
-  const dependencyArray = Object.keys(system).reduce((result, key) => {
-    const component = system[key];
+function dependencyGraph(systemMap: object): string[] {
+  const dependencyArray = Object.keys(systemMap).reduce((result, key) => {
+    const component = systemMap[key];
 
     values(dependencies(component)).forEach((dependency) =>
       result.push([dependency, key])
@@ -141,24 +147,24 @@ function dependencyGraph(system: object): string[] {
     return result;
   }, []);
 
-  return buildDAG(system, dependencyArray);
+  return buildDAG(systemMap, dependencyArray);
 }
 
-function assocDependencies(component: Lifecycle, system: object) {
+function assignDependencies(component: any, systemMap: object): void {
   const metadataDependencies = dependencies(component);
 
-  Object.keys(metadataDependencies).forEach((key) => {
+  for (const key of Object.keys(metadataDependencies)) {
     component[key] = getDependency(
-      system,
+      systemMap,
       metadataDependencies[key],
       component,
       key
     );
-  });
+  }
 }
 
 async function tryAction(
-  component: Lifecycle,
+  component: any,
   systemMap: object,
   systemKey: string,
   f: "start" | "stop"
@@ -201,64 +207,71 @@ export class SystemMap implements ILifecycle {
     this.__metadata = {
       __cache: {}
     };
+    this.__assignDependencies();
   }
 
   public start(): Promise<any> {
-    return this.__update(this.__getBuiltOrder(), "start");
+    return this.__triggerLifecycle("start", this.__getBuiltOrder());
   }
 
   public stop(): Promise<any> {
-    return this.__update(this.__getReversedBuiltOrder(), "stop");
-  }
-
-  public assocDependencies() {
-    Object.keys(this.map).forEach((key) => {
-      assocDependencies(getComponent(this.map, key), this.map);
-    });
+    return this.__triggerLifecycle("stop", this.__getReversedBuiltOrder());
   }
 
   public async replace(
     newMap: object,
-    options?: { shouldRestart: boolean }
+    options: { shouldRestart: boolean } = { shouldRestart: false }
   ): Promise<any> {
-    const shouldRestart =
-      typeof options === "object" && "shouldRestart" in options
-        ? options.shouldRestart
-        : true;
-
-    await this.__update(
-      this.__filteredBuiltOrder(
-        this.__getReversedBuiltOrder(),
-        Object.keys(newMap)
-      ),
-      "stop"
-    );
+    if (options.shouldRestart) {
+      await this.__triggerLifecycle(
+        "stop",
+        this.__filteredBuiltOrder(
+          Object.keys(newMap),
+          this.__getReversedBuiltOrder()
+        )
+      );
+    }
 
     Object.assign(this.map, newMap);
     this.__unsetCache(SystemMap.BUILT_ORDER_CACHE_KEY);
+    this.__assignDependencies();
 
-    await this.__update(
-      this.__filteredBuiltOrder(
-        this.__getBuiltOrder(),
-        Object.keys(this.map)
-      ),
-      "start"
-    );
+    if (options.shouldRestart) {
+      await this.__triggerLifecycle(
+        "start",
+        this.__filteredBuiltOrder(Object.keys(this.map), this.__getBuiltOrder())
+      );
+    }
   }
 
-  public toString() {
+  public toString(): string {
     return `SystemMap { ${Object.keys(this.map).join(", ")} }`;
   }
 
-  private __getCache(key: string) {
+  private __assignDependencies(): void {
+    for (const key of Object.keys(this.map)) {
+      assignDependencies(getComponent(this.map, key), this.map);
+    }
+  }
+
+  private async __triggerLifecycle(
+    f: "start" | "stop",
+    order: string[]
+  ): Promise<any> {
+    for (const key of order) {
+      await tryAction(getComponent(this.map, key), this.map, key, f);
+    }
+  }
+
+  private __getCache(key: string): any {
     return this.__metadata.__cache[key];
   }
 
-  private __setCache(key: string, value: any) {
+  private __setCache(key: string, value: any): void {
     this.__metadata.__cache[key] = value;
   }
 
-  private __unsetCache(key: string) {
+  private __unsetCache(key: string): void {
     delete this.__metadata.__cache[key];
   }
 
@@ -281,18 +294,10 @@ export class SystemMap implements ILifecycle {
   }
 
   private __filteredBuiltOrder(
-    order: string[],
-    keys: string[]
+    systemKeys: string[],
+    order: string[]
   ): string[] {
-    const set = new Set(keys);
+    const set = new Set(systemKeys);
     return order.filter((systemKey) => set.has(systemKey));
-  }
-
-  private async __update(order: string[], f: "start" | "stop"): Promise<any> {
-    for (const key of order) {
-      const component = getComponent(this.map, key);
-      assocDependencies(component, this.map);
-      await tryAction(component, this.map, key, f);
-    }
   }
 }

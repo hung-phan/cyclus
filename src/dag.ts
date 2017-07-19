@@ -73,12 +73,12 @@ function buildTopoGraph(graph: IGraph): string[] {
   return result;
 }
 
-export default function buildDAG(system: object, dependencyArray: Array<[string, string]>): string[] {
+export default function buildDAG(systemMap: object, dependencyArray: Array<[string, string]>): string[] {
   const graph: IGraph = {};
 
-  Object.keys(system).forEach((key) => {
+  for (const key of Object.keys(systemMap)) {
     graph[key] = new Node(key);
-  });
+  }
 
   for (const [parent, child] of dependencyArray) {
     const parentNode = graph[parent];
