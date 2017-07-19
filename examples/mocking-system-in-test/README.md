@@ -80,7 +80,7 @@ describe("main.js", () => {
     await system.replace({ database: new FakeDatabase() });
     await system.start();
     
-    // => This will WebApp.start with fake client from FakeDatabase, which resolves
+    // => This will call `WebApp.start` with fake client from FakeDatabase, which resolves
     // Result Hello from the other side
   });
 });
