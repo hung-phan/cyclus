@@ -1,4 +1,6 @@
-## Reloadable system using webpack and vantage
+## Reloadable system using webpack
+
+![alt text](https://raw.githubusercontent.com/hung-phan/cyclus/master/reloadable-system.gif "reloadable-system")
 
 To install all dependencies
 

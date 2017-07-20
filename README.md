@@ -204,6 +204,8 @@ under example/reloadable-system
 
 ![alt text](https://raw.githubusercontent.com/hung-phan/cyclus/master/reloadable-system.gif "reloadable-system")
 
+![alt text](https://raw.githubusercontent.com/hung-phan/cyclus/master/reloadable-with-vantage.gif "reloadable-system")
+
 ### Promise
 
 `start`, `stop`, or `replace` will return a promise instead of running synchronously. So makes sure you wait for the
