@@ -4,6 +4,7 @@
   "version": "1.2.2",
   "author": "hung-phan",
   "dependencies": {
+    "ts-jest": "^20.0.7",
     "tslib": "^1.7.1"
   },
   "devDependencies": {
@@ -31,7 +32,7 @@
       "js"
     ],
     "transform": {
-      "^.+\\.ts$": "<rootDir>/preprocessor.js"
+      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
     "testPathIgnorePatterns": [
       "dist"
