@@ -4,13 +4,13 @@
   "version": "1.2.3",
   "author": "hung-phan",
   "dependencies": {
-    "ts-jest": "^20.0.7",
     "tslib": "^1.7.1"
   },
   "devDependencies": {
     "@types/jest": "^20.0.4",
     "jest": "^20.0.4",
     "rimraf": "^2.6.1",
+    "ts-jest": "^20.0.7",
     "ts-node": "^3.2.0",
     "tslint": "^5.5.0",
     "typescript": "^2.4.1"
@@ -42,12 +42,12 @@
     ]
   },
   "jsnext:main": "dist/esnext/index.js",
-  "license": "MIT",
   "keywords": [
     "dependency injection",
     "inversion of control",
     "lifecycle"
   ],
+  "license": "MIT",
   "main": "dist/es6/index.js",
   "module": "dist/esnext/index.js",
   "scripts": {
