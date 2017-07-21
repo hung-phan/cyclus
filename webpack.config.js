@@ -1,33 +1,23 @@
 const path = require("path");
 const webpack = require("webpack");
-const nodeExternals = require("webpack-node-externals");
+const BabiliPlugin = require("babili-webpack-plugin");
 const CheckerPlugin = require("awesome-typescript-loader").CheckerPlugin;
 
 module.exports = {
   context: __dirname,
-  target: "node",
-  node: {
-    __dirname: true,
-    __filename: true
-  },
   entry: {
-    server: [
-      "webpack/hot/poll?1000",
+    cyclus: [
       path.join(__dirname, "src", "index")
     ]
   },
-  recordsPath: path.join(__dirname, "tmp", "records.json"),
+  devtool: false,
   output: {
-    path: path.join(__dirname, "dist"),
+    path: path.join(__dirname, "dist", "browser"),
     filename: "[name].js",
     chunkFilename: "[id].js",
-    libraryTarget: "commonjs2"
+    libraryTarget: "umd"
   },
-  externals: [
-    nodeExternals({
-      whitelist: [/^webpack/]
-    })
-  ],
+  externals: [],
   resolve: {
     extensions: [".ts", ".js"],
     modules: [path.resolve("./src"), "node_modules"]
@@ -41,9 +31,15 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin(),
-    new CheckerPlugin()
+    new CheckerPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
+    new BabiliPlugin({}, {
+      comments: false
+    })
   ]
 };
