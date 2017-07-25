@@ -220,16 +220,18 @@ export class SystemMap implements ILifecycle {
 
   public async replace(
     newMap: object,
-    options: { shouldRestart?: boolean; shouldStop?: string[] } = {}
+    options: { shouldRestart?: boolean | string[] } = {}
   ): Promise<any> {
     const shouldRestart = options.shouldRestart;
-    const shouldStop = options.shouldStop || [];
 
     if (shouldRestart) {
       await this.__triggerLifecycle(
         "stop",
         this.__filteredBuiltOrder(
-          [...Object.keys(newMap), ...shouldStop],
+          [
+            ...Object.keys(newMap),
+            ...(Array.isArray(shouldRestart) ? shouldRestart : [])
+          ],
           this.__getReversedBuiltOrder()
         )
       );

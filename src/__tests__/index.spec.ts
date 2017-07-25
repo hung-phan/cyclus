@@ -241,7 +241,7 @@ describe("cyclus", () => {
       expect(system).toMatchSnapshot();
       await system.replace(
         { database: new NewDatabase() },
-        { shouldRestart: true, shouldStop: ["scheduler"] }
+        { shouldRestart: ["scheduler"] }
       );
       expect(system).toMatchSnapshot();
       expect(order).toMatchSnapshot();
