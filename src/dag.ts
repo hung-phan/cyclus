@@ -44,7 +44,7 @@ interface IGraph {
 }
 
 function getNodeWithoutParent(graph: IGraph): string[] {
-  return Object.keys(graph).filter((key) => graph[key].incomingNodes.size === 0);
+  return Object.keys(graph).filter(key => graph[key].incomingNodes.size === 0);
 }
 
 function buildTopoGraph(graph: IGraph): string[] {
@@ -56,7 +56,7 @@ function buildTopoGraph(graph: IGraph): string[] {
 
     result.push(node.key);
 
-    node.outgoingNodes.forEach((connectedNode) => {
+    node.outgoingNodes.forEach(connectedNode => {
       node.removeNode(Node.OUTGOING, connectedNode);
       connectedNode.removeNode(Node.INCOMING, node);
 
@@ -73,7 +73,10 @@ function buildTopoGraph(graph: IGraph): string[] {
   return result;
 }
 
-export default function buildDAG(systemMap: object, dependencyArray: Array<[string, string]>): string[] {
+export default function buildDAG(
+  systemMap: object,
+  dependencyArray: Array<[string, string]>
+): string[] {
   const graph: IGraph = {};
 
   for (const key of Object.keys(systemMap)) {

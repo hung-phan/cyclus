@@ -352,6 +352,124 @@ Array [
 ]
 `;
 
+exports[`cyclus replacing dependencies on the fly should stop components in 'shouldStop' attribute 1`] = `
+SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "scheduler",
+        "database",
+        "exampleComponent",
+      ],
+    },
+  },
+  "map": Object {
+    "database": Database {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "dbConnection": "OPENED",
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "database",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": true,
+      },
+      "database": Database {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "dbConnection": "OPENED",
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "tick": 10,
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "tick": 10,
+    },
+  },
+}
+`;
+
+exports[`cyclus replacing dependencies on the fly should stop components in 'shouldStop' attribute 2`] = `
+SystemMap {
+  "__metadata": Object {
+    "__cache": Object {
+      "@cyclus/SystemMap/BUILT_ORDER": Array [
+        "scheduler",
+        "database",
+        "exampleComponent",
+      ],
+    },
+  },
+  "map": Object {
+    "database": NewDatabase {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "dbConnection": "OPENED",
+    },
+    "exampleComponent": ExampleComponent {
+      "__metadata": Object {
+        "dependencies": Object {
+          "database": "database",
+          "scheduler": "scheduler",
+        },
+        "isInitialised": true,
+      },
+      "database": NewDatabase {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "dbConnection": "OPENED",
+      },
+      "scheduler": Scheduler {
+        "__metadata": Object {
+          "dependencies": Object {},
+          "isInitialised": true,
+        },
+        "tick": 10,
+      },
+    },
+    "scheduler": Scheduler {
+      "__metadata": Object {
+        "dependencies": Object {},
+        "isInitialised": true,
+      },
+      "tick": 10,
+    },
+  },
+}
+`;
+
+exports[`cyclus replacing dependencies on the fly should stop components in 'shouldStop' attribute 3`] = `
+Array [
+  "Start Scheduler",
+  "Start Database",
+  "Start ExampleComponent",
+  "Stop Database",
+  "Stop Scheduler",
+  "Start Scheduler",
+  "Start NewDatabase",
+]
+`;
+
 exports[`cyclus replacing dependencies on the fly should work for some components that are not in system before 1`] = `
 SystemMap {
   "__metadata": Object {

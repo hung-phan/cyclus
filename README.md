@@ -206,6 +206,13 @@ under example/reloadable-system
 
 ![alt text](https://raw.githubusercontent.com/hung-phan/cyclus/master/reloadable-with-vantage.gif "reloadable-system")
 
+Additionally, supplying `{ shouldStop: [...someSystemKeys] }` will stop any running components. This option will only
+work if `shouldRestart` is enabled.
+
+```typescript
+system.replace({ database: createNewDatabase() }, { shouldRestart: true, shouldStop: ["scheduler"] });
+```
+
 ### Promise
 
 `start`, `stop`, or `replace` will return a promise instead of running synchronously. So makes sure you wait for the

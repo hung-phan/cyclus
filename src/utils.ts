@@ -35,9 +35,9 @@ export function get(obj: object, key: string, defaultVal: any): any {
 }
 
 export function values(obj: object): any[] {
-  return Object.keys(obj).map((key) => obj[key]);
+  return Object.keys(obj).map(key => obj[key]);
 }
 
 export function isObject(obj: object): boolean {
-  return obj != null && typeof obj === "object" && Array.isArray(obj) === false;
+  return obj !== null && typeof obj === "object" && Array.isArray(obj) === false;
 }

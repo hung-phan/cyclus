@@ -140,7 +140,7 @@ function dependencyGraph(systemMap: object): string[] {
   const dependencyArray = Object.keys(systemMap).reduce((result, key) => {
     const component = systemMap[key];
 
-    values(dependencies(component)).forEach((dependency) =>
+    values(dependencies(component)).forEach(dependency =>
       result.push([dependency, key])
     );
 
@@ -220,13 +220,16 @@ export class SystemMap implements ILifecycle {
 
   public async replace(
     newMap: object,
-    options: { shouldRestart: boolean } = { shouldRestart: false }
+    options: { shouldRestart?: boolean; shouldStop?: string[] } = {}
   ): Promise<any> {
-    if (options.shouldRestart) {
+    const shouldRestart = options.shouldRestart;
+    const shouldStop = options.shouldStop || [];
+
+    if (shouldRestart) {
       await this.__triggerLifecycle(
         "stop",
         this.__filteredBuiltOrder(
-          Object.keys(newMap),
+          [...Object.keys(newMap), ...shouldStop],
           this.__getReversedBuiltOrder()
         )
       );
@@ -236,7 +239,7 @@ export class SystemMap implements ILifecycle {
     this.__unsetCache(SystemMap.BUILT_ORDER_CACHE_KEY);
     this.__assignDependencies();
 
-    if (options.shouldRestart) {
+    if (shouldRestart) {
       await this.__triggerLifecycle(
         "start",
         this.__filteredBuiltOrder(Object.keys(this.map), this.__getBuiltOrder())
@@ -298,6 +301,6 @@ export class SystemMap implements ILifecycle {
     order: string[]
   ): string[] {
     const set = new Set(systemKeys);
-    return order.filter((systemKey) => set.has(systemKey));
+    return order.filter(systemKey => set.has(systemKey));
   }
 }

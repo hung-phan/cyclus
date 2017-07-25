@@ -225,6 +225,27 @@ describe("cyclus", () => {
       expect(system).toMatchSnapshot();
       expect(order).toMatchSnapshot();
     });
+
+    it("should stop components in 'shouldStop' attribute", async () => {
+      system = new SystemMap({
+        database: new Database(),
+        scheduler: new Scheduler(),
+        exampleComponent: using(new ExampleComponent(), [
+          "database",
+          "scheduler"
+        ])
+      });
+
+      await system.start();
+
+      expect(system).toMatchSnapshot();
+      await system.replace(
+        { database: new NewDatabase() },
+        { shouldRestart: true, shouldStop: ["scheduler"] }
+      );
+      expect(system).toMatchSnapshot();
+      expect(order).toMatchSnapshot();
+    });
   });
 
   describe("async", () => {
