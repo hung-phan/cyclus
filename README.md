@@ -187,13 +187,7 @@ const system = new SystemMap({
 
 Calling replace with given hashmap of new dependencies
 
-#### For testing
-
-```typescript
-system.replace({ database: createNewDatabase() });
-```
-
-#### For patching an already running system
+#### Gracefully restart
 
 ```typescript
 system.replace({ database: createNewDatabase() }, { shouldRestart: true });
@@ -214,6 +208,28 @@ system.replace({ database: createNewDatabase() }, { shouldRestart: ["scheduler"]
 ```
 
 In this case, it will stop both `database` and `scheduler` then start them again
+
+#### Hot patch a running system
+
+For many cases, gracefully restart won't work correctly due to the workload on each component. For example, we can't
+stop a database in the middle of heavy load from client. So the best way is to create a new instance, replace a
+running component, then stop old component
+
+```typescript
+const oldDatabaseComponent = system.map.database;
+const newDatabaseComponent = createNewDatabase();
+
+await newDatabaseComponent.start();
+await system.replace({ database: newDatabaseComponent });
+await oldDatabaseComponent.stop(); // this has to process any remained request before exist
+```
+
+#### Testing
+
+```typescript
+system.replace({ database: createFakeDatabase() })
+system.start();
+```
 
 ### Promise
 
