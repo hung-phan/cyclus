@@ -2,7 +2,6 @@ import buildDAG from "./dag";
 import {
   CyclusError,
   CyclusInvalidComponentError,
-  CyclusNotImplemented,
   get,
   isObject,
   values
@@ -32,7 +31,7 @@ export class Lifecycle implements ILifecycle {
    * component.
    */
   public start(): Promise<any> | void {
-    throw new CyclusNotImplemented();
+    // do nothing
   }
 
   /**
@@ -41,7 +40,7 @@ export class Lifecycle implements ILifecycle {
    * component.
    */
   public stop(): Promise<any> | void {
-    throw new CyclusNotImplemented();
+    // do nothing
   }
 }
 

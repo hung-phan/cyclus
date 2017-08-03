@@ -20,12 +20,6 @@ export class CyclusInvalidComponentError extends CyclusError {
   }
 }
 
-export class CyclusNotImplemented extends Error {
-  constructor() {
-    super(`Not implemented`);
-  }
-}
-
 export function get(obj: object, key: string, defaultVal: any): any {
   if (key in obj) {
     return obj[key];

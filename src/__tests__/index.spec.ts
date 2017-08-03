@@ -88,6 +88,12 @@ describe("cyclus", () => {
     }
   }
 
+  class DummyComponent extends Lifecycle {
+    public start() {
+      order.push("Start DummyComponent");
+    }
+  }
+
   let order;
   let system;
   let emailServiceMock;
@@ -105,7 +111,8 @@ describe("cyclus", () => {
         exampleComponent: using(new ExampleComponent(), [
           "database",
           "scheduler"
-        ])
+        ]),
+        dummyComponent: new DummyComponent()
       });
       await system.start();
     });

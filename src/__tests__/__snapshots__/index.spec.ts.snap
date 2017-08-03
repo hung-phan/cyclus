@@ -112,6 +112,7 @@ SystemMap {
 
 exports[`cyclus lifecycle should start the system in order 1`] = `
 Array [
+  "Start DummyComponent",
   "Start Scheduler",
   "Start Database",
   "Start ExampleComponent",
@@ -120,6 +121,7 @@ Array [
 
 exports[`cyclus lifecycle should stop the system in reversed order 1`] = `
 Array [
+  "Start DummyComponent",
   "Start Scheduler",
   "Start Database",
   "Start ExampleComponent",
@@ -131,6 +133,7 @@ Array [
 
 exports[`cyclus lifecycle starting should be idempotent 1`] = `
 Array [
+  "Start DummyComponent",
   "Start Scheduler",
   "Start Database",
   "Start ExampleComponent",
@@ -139,6 +142,7 @@ Array [
 
 exports[`cyclus lifecycle stopping should be idempotent 1`] = `
 Array [
+  "Start DummyComponent",
   "Start Scheduler",
   "Start Database",
   "Start ExampleComponent",
