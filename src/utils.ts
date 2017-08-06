@@ -8,18 +8,6 @@ export class CyclusError extends Error {
   }
 }
 
-export class CyclusInvalidComponentError extends CyclusError {
-  constructor(systemMap: object, systemKey: string) {
-    super(
-      `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
-      {
-        systemMap,
-        systemKey
-      }
-    );
-  }
-}
-
 export function get(obj: object, key: string, defaultVal: any): any {
   if (key in obj) {
     return obj[key];

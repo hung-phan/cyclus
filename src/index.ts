@@ -1,7 +1,6 @@
 import buildDAG from "./dag";
 import {
   CyclusError,
-  CyclusInvalidComponentError,
   get,
   isObject,
   values
@@ -95,7 +94,13 @@ function getComponent(systemMap: object, systemKey: string): any {
   const component = get(systemMap, systemKey, NOT_FOUND);
 
   if (component === null || component === undefined) {
-    throw new CyclusInvalidComponentError(systemMap, systemKey);
+    throw new CyclusError(
+      `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
+      {
+        systemKey,
+        systemMap
+      }
+    );
   }
 
   if (component === NOT_FOUND) {
@@ -117,7 +122,13 @@ function getDependency(
   const dependency = get(systemMap, systemKey, NOT_FOUND);
 
   if (dependency === null || dependency === undefined) {
-    throw new CyclusInvalidComponentError(systemMap, systemKey);
+    throw new CyclusError(
+      `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
+      {
+        systemKey,
+        systemMap
+      }
+    );
   }
 
   if (dependency === NOT_FOUND) {
