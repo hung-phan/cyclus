@@ -17,6 +17,10 @@ npm install cyclus
 
 ```typescript
 import { Lifecycle, SystemMap, using } from "cyclus";
+// or import { Lifecycle, SystemMap, using } from "cyclus/dist/browser/cyclus";
+// or import { Lifecycle, SystemMap, using } from "cyclus/dist/es5";
+// or import { Lifecycle, SystemMap, using } from "cyclus/dist/es6";
+// or import { Lifecycle, SystemMap, using } from "cyclus/dist/esnext";
 ```
 
 ### Creating Components
