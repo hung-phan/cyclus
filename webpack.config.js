@@ -1,6 +1,6 @@
 const path = require("path");
 const webpack = require("webpack");
-const BabiliPlugin = require("babili-webpack-plugin");
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 const CheckerPlugin = require("awesome-typescript-loader").CheckerPlugin;
 
 module.exports = {
@@ -38,7 +38,7 @@ module.exports = {
       minimize: true,
       debug: false
     }),
-    new BabiliPlugin({}, {
+    new MinifyPlugin({}, {
       comments: false
     })
   ]
