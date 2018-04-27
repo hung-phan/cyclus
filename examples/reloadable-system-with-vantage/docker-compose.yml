@@ -2,7 +2,7 @@ version: '2'
 services:
   postgres:
     container_name: dev_postgres
-    image: postgres:9.6.1
+    image: postgres:10
     environment:
       - POSTGRES_USER=developer
       - POSTGRES_PASSWORD=developer
