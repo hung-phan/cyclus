@@ -3,7 +3,6 @@ import {
   CyclusError,
   get,
   isObject,
-  values
 } from "./utils";
 
 export interface ILifecycle {
@@ -150,7 +149,7 @@ function dependencyGraph(systemMap: object): string[] {
   const dependencyArray = Object.keys(systemMap).reduce((result, key) => {
     const component = systemMap[key];
 
-    values(dependencies(component)).forEach(dependency =>
+    Object.values(dependencies(component)).forEach(dependency =>
       result.push([dependency, key])
     );
 

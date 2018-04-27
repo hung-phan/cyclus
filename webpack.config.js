@@ -1,7 +1,7 @@
 const path = require("path");
 const webpack = require("webpack");
-const MinifyPlugin = require("babel-minify-webpack-plugin");
-const CheckerPlugin = require("awesome-typescript-loader").CheckerPlugin;
+const MinifyPlugin = require("uglifyjs-webpack-plugin");
+const { CheckerPlugin } = require("awesome-typescript-loader");
 
 module.exports = {
   context: __dirname,
@@ -10,6 +10,7 @@ module.exports = {
       path.join(__dirname, "src", "index")
     ]
   },
+  mode: "production",
   devtool: false,
   output: {
     path: path.join(__dirname, "dist", "browser"),
@@ -23,7 +24,7 @@ module.exports = {
     modules: [path.resolve("./src"), "node_modules"]
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(ts|tsx)$/,
         loader: "awesome-typescript-loader"
@@ -32,14 +33,14 @@ module.exports = {
   },
   plugins: [
     new CheckerPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false
     }),
-    new MinifyPlugin({}, {
-      comments: false
+    new MinifyPlugin({
+      cache: true,
+      parallel: true,
+      sourceMap: true
     })
   ]
 };

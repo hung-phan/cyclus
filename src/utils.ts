@@ -16,10 +16,6 @@ export function get(obj: object, key: string, defaultVal: any): any {
   return defaultVal;
 }
 
-export function values(obj: object): any[] {
-  return Object.keys(obj).map(key => obj[key]);
-}
-
 export function isObject(obj: object): boolean {
   return obj !== null && typeof obj === "object" && Array.isArray(obj) === false;
 }
