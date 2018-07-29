@@ -1,7 +1,7 @@
 {
   "name": "cyclus",
   "description": "IOC and lifecycle for javascript object",
-  "version": "1.7.0",
+  "version": "1.8.0",
   "author": "hung-phan",
   "dependencies": {
     "tslib": "^1.9.3"
