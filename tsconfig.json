@@ -7,7 +7,7 @@
     "emitDecoratorMetadata": true,
     "allowSyntheticDefaultImports": true,
     "importHelpers": true,
-    "jsx": "React",
+    "jsx": "react",
     "typeRoots" : [
       "node_modules/@types"
     ],

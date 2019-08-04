@@ -4,19 +4,19 @@
   "version": "1.8.0",
   "author": "hung-phan",
   "dependencies": {
-    "tslib": "^1.9.3"
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
-    "@types/jest": "^23.3.1",
-    "awesome-typescript-loader": "^5.2.0",
-    "jest": "^23.4.2",
-    "ts-jest": "^23.0.1",
-    "ts-node": "^7.0.0",
-    "tslint": "^5.11.0",
-    "typescript": "^2.9.2",
-    "uglifyjs-webpack-plugin": "^1.2.7",
-    "webpack": "^4.16.3",
-    "webpack-cli": "^3.1.0"
+    "@types/jest": "^24.0.16",
+    "awesome-typescript-loader": "^5.2.1",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.3.0",
+    "tslint": "^5.18.0",
+    "typescript": "^3.5.3",
+    "uglifyjs-webpack-plugin": "^2.2.0",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
   },
   "engines": {
     "node": ">= 4.1.0",
@@ -35,7 +35,7 @@
       "js"
     ],
     "transform": {
-      "^.+\\.ts$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+      "^.+\\.ts$": "ts-jest"
     },
     "testPathIgnorePatterns": [
       "dist"
