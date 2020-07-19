@@ -12,7 +12,7 @@ export interface ILifecycle {
 
 export class Lifecycle implements ILifecycle {
   public __metadata: {
-    dependencies: { [key: string]: string };
+    dependencies: { [key: string]: string }
     isInitialised: boolean;
   };
 
