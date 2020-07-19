@@ -75,7 +75,7 @@ function buildTopoGraph(graph: IGraph): string[] {
 
 export default function buildDAG(
   systemMap: object,
-  dependencyArray: Array<[string, string]>
+  dependencyArray: [string, string][]
 ): string[] {
   const graph: IGraph = {};
 
