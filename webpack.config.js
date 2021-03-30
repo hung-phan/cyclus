@@ -1,7 +1,4 @@
 const path = require("path");
-const webpack = require("webpack");
-const MinifyPlugin = require("uglifyjs-webpack-plugin");
-const { CheckerPlugin } = require("awesome-typescript-loader");
 
 module.exports = {
   context: __dirname,
@@ -27,20 +24,8 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        loader: "awesome-typescript-loader"
+        loader: "ts-loader"
       }
     ]
-  },
-  plugins: [
-    new CheckerPlugin(),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
-    }),
-    new MinifyPlugin({
-      cache: true,
-      parallel: true,
-      sourceMap: true
-    })
-  ]
+  }
 };
