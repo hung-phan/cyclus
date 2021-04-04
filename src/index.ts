@@ -1,13 +1,10 @@
 import buildDAG from "./dag";
-import {
-  CyclusError,
-  get,
-  isObject,
-} from "./utils";
+import { CyclusError, get, isObject, } from "./utils";
 
 export interface ILifecycle {
-  start(): Promise<any> | void;
-  stop(): Promise<any> | void;
+  start(): Promise<unknown> | void;
+
+  stop(): Promise<unknown> | void;
 }
 
 export class Lifecycle implements ILifecycle {
@@ -28,7 +25,7 @@ export class Lifecycle implements ILifecycle {
    * until the component is started. Returns an updated version of this
    * component.
    */
-  public start(): Promise<any> | void {
+  public start(): Promise<unknown> | void {
     // do nothing
   }
 
@@ -37,19 +34,17 @@ export class Lifecycle implements ILifecycle {
    * until the component is stopped. Returns an updated version of this
    * component.
    */
-  public stop(): Promise<any> | void {
+  public stop(): Promise<unknown> | void {
     // do nothing
   }
 }
 
+type SystemMapData = { [key: string]: unknown }
+
 /**
  * Returns the map of other components on which this component depends.
  */
-function dependencies(component: any): { [key: string]: string } {
-  if (!(component instanceof Lifecycle)) {
-    return {};
-  }
-
+function dependencies(component: Lifecycle): { [key: string]: string } {
   return component.__metadata.dependencies;
 }
 
@@ -89,12 +84,12 @@ export function using(
 
 const NOT_FOUND = Symbol("NOT_FOUND");
 
-function getComponent(systemMap: object, systemKey: string): any {
+function getComponent(systemMap: SystemMapData, systemKey: string): unknown {
   const component = get(systemMap, systemKey, NOT_FOUND);
 
   if (component === null || component === undefined) {
     throw new CyclusError(
-      `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
+      `Component ${systemKey} was null or undefined in system`,
       {
         systemKey,
         systemMap
@@ -113,16 +108,16 @@ function getComponent(systemMap: object, systemKey: string): any {
 }
 
 function getDependency(
-  systemMap: object,
+  systemMap: SystemMapData,
   systemKey: string,
   component: Lifecycle,
   dependencyKey: string
-): any {
+): unknown {
   const dependency = get(systemMap, systemKey, NOT_FOUND);
 
   if (dependency === null || dependency === undefined) {
     throw new CyclusError(
-      `Component ${systemKey} was null or undefined in system; maybe it returned null or undefined from start or stop`,
+      `Component ${systemKey} was null or undefined in system`,
       {
         systemKey,
         systemMap
@@ -145,39 +140,45 @@ function getDependency(
   return dependency;
 }
 
-function dependencyGraph(systemMap: object): string[] {
-  const dependencyArray = Object.keys(systemMap).reduce((result, key) => {
-    const component = systemMap[key];
+function dependencyGraph(systemMap: SystemMapData): string[] {
+  const dependenciesArray = [];
 
-    Object.values(dependencies(component)).forEach(dependency =>
-      result.push([dependency, key])
-    );
+  for (const [key, component] of Object.entries(systemMap)) {
+    if (!(component instanceof Lifecycle)) {
+      continue;
+    }
 
-    return result;
-  }, []);
+    for (const dependency of Object.values(dependencies(component))) {
+      dependenciesArray.push([dependency, key]);
+    }
+  }
 
-  return buildDAG(systemMap, dependencyArray);
+  return buildDAG(systemMap, dependenciesArray);
 }
 
-function assignDependencies(component: any, systemMap: object): void {
+function assignDependencies(component: unknown, systemMap: SystemMapData): void {
+  if (!(component instanceof Lifecycle)) {
+    return;
+  }
+
   const metadataDependencies = dependencies(component);
 
-  for (const key of Object.keys(metadataDependencies)) {
-    component[key] = getDependency(
+  for (const [dependencyKey, systemKey] of Object.entries(metadataDependencies)) {
+    component[dependencyKey] = getDependency(
       systemMap,
-      metadataDependencies[key],
+      systemKey,
       component,
-      key
+      dependencyKey
     );
   }
 }
 
 async function tryAction(
-  component: any,
-  systemMap: object,
+  component: unknown,
+  systemMap: SystemMapData,
   systemKey: string,
   f: "start" | "stop"
-): Promise<any> {
+): Promise<void> {
   try {
     if (
       !(component instanceof Lifecycle) ||
@@ -206,31 +207,31 @@ async function tryAction(
 export class SystemMap implements ILifecycle {
   private static BUILT_ORDER_CACHE_KEY = "@cyclus/SystemMap/BUILT_ORDER";
 
-  public map: object;
+  public map: SystemMapData;
   private __metadata: {
-    __cache: object;
+    cache: object;
   };
 
-  constructor(map: object) {
+  constructor(map: SystemMapData) {
     this.map = map;
     this.__metadata = {
-      __cache: {}
+      cache: {}
     };
     this.__assignDependencies();
   }
 
-  public start(): Promise<any> {
+  public start(): Promise<unknown> {
     return this.__triggerLifecycle("start", this.__getBuiltOrder());
   }
 
-  public stop(): Promise<any> {
+  public stop(): Promise<unknown> {
     return this.__triggerLifecycle("stop", this.__getReversedBuiltOrder());
   }
 
   public async replace(
-    newMap: object,
+    newMap: SystemMapData,
     options: { shouldRestart?: boolean | string[] } = {}
-  ): Promise<any> {
+  ): Promise<void> {
     const shouldRestart = options.shouldRestart;
 
     if (shouldRestart) {
@@ -271,22 +272,22 @@ export class SystemMap implements ILifecycle {
   private async __triggerLifecycle(
     f: "start" | "stop",
     order: string[]
-  ): Promise<any> {
+  ): Promise<void> {
     for (const key of order) {
       await tryAction(getComponent(this.map, key), this.map, key, f);
     }
   }
 
   private __getCache(key: string): any {
-    return this.__metadata.__cache[key];
+    return this.__metadata.cache[key];
   }
 
   private __setCache(key: string, value: any): void {
-    this.__metadata.__cache[key] = value;
+    this.__metadata.cache[key] = value;
   }
 
   private __unsetCache(key: string): void {
-    delete this.__metadata.__cache[key];
+    delete this.__metadata.cache[key];
   }
 
   private __getBuiltOrder(): string[] {

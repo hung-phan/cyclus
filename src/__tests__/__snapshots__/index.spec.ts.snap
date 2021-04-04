@@ -3,7 +3,7 @@
 exports[`cyclus async should wait for start or stop method to resolve 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "component2",
         "component1",
@@ -60,7 +60,7 @@ Array [
 exports[`cyclus injecting dependencies correctly should work with map 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "sched",
         "db",
@@ -155,7 +155,7 @@ Array [
 exports[`cyclus replacing dependencies on the fly should replace but not start or stop any component 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {},
+    "cache": Object {},
   },
   "map": Object {
     "database": Database {
@@ -198,7 +198,7 @@ SystemMap {
 exports[`cyclus replacing dependencies on the fly should replace but not start or stop any component 2`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {},
+    "cache": Object {},
   },
   "map": Object {
     "database": NewDatabase {
@@ -243,7 +243,7 @@ exports[`cyclus replacing dependencies on the fly should replace but not start o
 exports[`cyclus replacing dependencies on the fly should restart correctly 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "scheduler",
         "database",
@@ -296,7 +296,7 @@ SystemMap {
 exports[`cyclus replacing dependencies on the fly should restart correctly 2`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "scheduler",
         "database",
@@ -359,7 +359,7 @@ Array [
 exports[`cyclus replacing dependencies on the fly should stop components in 'shouldStop' attribute 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "scheduler",
         "database",
@@ -412,7 +412,7 @@ SystemMap {
 exports[`cyclus replacing dependencies on the fly should stop components in 'shouldStop' attribute 2`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "scheduler",
         "database",
@@ -477,7 +477,7 @@ Array [
 exports[`cyclus replacing dependencies on the fly should work for some components that are not in system before 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "emailService",
         "scheduler",
@@ -578,7 +578,7 @@ Array [
 exports[`cyclus simple component should able to replace the config on the fly 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {},
+    "cache": Object {},
   },
   "map": Object {
     "component": Component {
@@ -604,7 +604,7 @@ SystemMap {
 exports[`cyclus simple component should work correctly 1`] = `
 SystemMap {
   "__metadata": Object {
-    "__cache": Object {
+    "cache": Object {
       "@cyclus/SystemMap/BUILT_ORDER": Array [
         "config",
         "component",
