@@ -11,14 +11,14 @@ export interface ILifecycle {
 
 export class Lifecycle implements ILifecycle {
   public __cyclusMetadata: {
+    state: State,
     dependencies: { [key: string]: string }
-    state: State;
   };
 
   constructor() {
     this.__cyclusMetadata = {
-      dependencies: {},
-      state: "stop"
+      state: "stop",
+      dependencies: {}
     };
   }
 
