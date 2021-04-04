@@ -1,6 +1,8 @@
 import buildDAG from "./dag";
 import { CyclusError, get, isObject, } from "./utils";
 
+type State = "start" | "stop";
+
 export interface ILifecycle {
   start(): Promise<unknown> | void;
 
@@ -10,13 +12,13 @@ export interface ILifecycle {
 export class Lifecycle implements ILifecycle {
   public __metadata: {
     dependencies: { [key: string]: string }
-    isInitialised: boolean;
+    state: State;
   };
 
   constructor() {
     this.__metadata = {
       dependencies: {},
-      isInitialised: false
+      state: "stop"
     };
   }
 
@@ -177,19 +179,18 @@ async function tryAction(
   component: unknown,
   systemMap: SystemMapData,
   systemKey: string,
-  f: "start" | "stop"
+  f: State
 ): Promise<void> {
   try {
     if (
       !(component instanceof Lifecycle) ||
-      (component.__metadata.isInitialised && f === "start") ||
-      (!component.__metadata.isInitialised && f === "stop")
+      component.__metadata.state === f
     ) {
       return;
     }
 
     await component[f]();
-    component.__metadata.isInitialised = f === "start";
+    component.__metadata.state = f;
   } catch (error) {
     throw new CyclusError(
       `Error in component ${systemKey} in system calling ${f}`,

@@ -15,13 +15,13 @@ SystemMap {
     "component1": Component1 {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
     },
     "component2": Component2 {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
     },
     "component3": Component3 {
@@ -30,18 +30,18 @@ SystemMap {
           "component1": "component1",
           "component2": "component2",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "component1": Component1 {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
       },
       "component2": Component2 {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
       },
     },
@@ -72,7 +72,7 @@ SystemMap {
     "db": Database {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "dbConnection": "OPENED",
     },
@@ -82,19 +82,19 @@ SystemMap {
           "database": "db",
           "scheduler": "sched",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "database": Database {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "tick": 10,
       },
@@ -102,7 +102,7 @@ SystemMap {
     "sched": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "tick": 10,
     },
@@ -161,7 +161,7 @@ SystemMap {
     "database": Database {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": false,
+        "state": "stop",
       },
     },
     "exampleComponent": ExampleComponent {
@@ -170,25 +170,25 @@ SystemMap {
           "database": "database",
           "scheduler": "scheduler",
         },
-        "isInitialised": false,
+        "state": "stop",
       },
       "database": Database {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": false,
+          "state": "stop",
         },
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": false,
+          "state": "stop",
         },
       },
     },
     "scheduler": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": false,
+        "state": "stop",
       },
     },
   },
@@ -204,7 +204,7 @@ SystemMap {
     "database": NewDatabase {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": false,
+        "state": "stop",
       },
     },
     "exampleComponent": ExampleComponent {
@@ -213,25 +213,25 @@ SystemMap {
           "database": "database",
           "scheduler": "scheduler",
         },
-        "isInitialised": false,
+        "state": "stop",
       },
       "database": NewDatabase {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": false,
+          "state": "stop",
         },
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": false,
+          "state": "stop",
         },
       },
     },
     "scheduler": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": false,
+        "state": "stop",
       },
     },
   },
@@ -255,7 +255,7 @@ SystemMap {
     "database": Database {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "dbConnection": "OPENED",
     },
@@ -265,19 +265,19 @@ SystemMap {
           "database": "database",
           "scheduler": "scheduler",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "database": Database {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "tick": 10,
       },
@@ -285,7 +285,7 @@ SystemMap {
     "scheduler": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "tick": 10,
     },
@@ -308,7 +308,7 @@ SystemMap {
     "database": NewDatabase {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "dbConnection": "OPENED",
     },
@@ -318,19 +318,19 @@ SystemMap {
           "database": "database",
           "scheduler": "scheduler",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "database": NewDatabase {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "tick": 10,
       },
@@ -338,7 +338,7 @@ SystemMap {
     "scheduler": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "tick": 10,
     },
@@ -371,7 +371,7 @@ SystemMap {
     "database": Database {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "dbConnection": "OPENED",
     },
@@ -381,19 +381,19 @@ SystemMap {
           "database": "database",
           "scheduler": "scheduler",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "database": Database {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "tick": 10,
       },
@@ -401,7 +401,7 @@ SystemMap {
     "scheduler": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "tick": 10,
     },
@@ -424,7 +424,7 @@ SystemMap {
     "database": NewDatabase {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "dbConnection": "OPENED",
     },
@@ -434,19 +434,19 @@ SystemMap {
           "database": "database",
           "scheduler": "scheduler",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "database": NewDatabase {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "tick": 10,
       },
@@ -454,7 +454,7 @@ SystemMap {
     "scheduler": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "tick": 10,
     },
@@ -491,14 +491,14 @@ SystemMap {
     "database": Database {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "dbConnection": "OPENED",
     },
     "emailService": EmailService {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
     },
     "exampleComponent": ExampleComponent {
@@ -507,19 +507,19 @@ SystemMap {
           "database": "database",
           "scheduler": "scheduler",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "database": Database {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "tick": 10,
       },
@@ -530,18 +530,18 @@ SystemMap {
           "emailService": "emailService",
           "scheduler": "scheduler",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "emailService": EmailService {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
       },
       "scheduler": Scheduler {
         "__metadata": Object {
           "dependencies": Object {},
-          "isInitialised": true,
+          "state": "start",
         },
         "tick": 10,
       },
@@ -549,7 +549,7 @@ SystemMap {
     "scheduler": Scheduler {
       "__metadata": Object {
         "dependencies": Object {},
-        "isInitialised": true,
+        "state": "start",
       },
       "tick": 10,
     },
@@ -586,7 +586,7 @@ SystemMap {
         "dependencies": Object {
           "config": "config",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "config": Object {
         "c": 3,
@@ -617,7 +617,7 @@ SystemMap {
         "dependencies": Object {
           "config": "config",
         },
-        "isInitialised": true,
+        "state": "start",
       },
       "config": Object {
         "a": 1,
