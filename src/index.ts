@@ -10,13 +10,13 @@ export interface ILifecycle {
 }
 
 export class Lifecycle implements ILifecycle {
-  public __metadata: {
+  public __cyclusMetadata: {
     dependencies: { [key: string]: string }
     state: State;
   };
 
   constructor() {
-    this.__metadata = {
+    this.__cyclusMetadata = {
       dependencies: {},
       state: "stop"
     };
@@ -47,7 +47,7 @@ type SystemMapData = { [key: string]: unknown }
  * Returns the map of other components on which this component depends.
  */
 function dependencies(component: Lifecycle): { [key: string]: string } {
-  return component.__metadata.dependencies;
+  return component.__cyclusMetadata.dependencies;
 }
 
 /**
@@ -80,7 +80,7 @@ export function using(
     );
   }
 
-  component.__metadata.dependencies = systemDependencies;
+  component.__cyclusMetadata.dependencies = systemDependencies;
   return component;
 }
 
@@ -184,13 +184,13 @@ async function tryAction(
   try {
     if (
       !(component instanceof Lifecycle) ||
-      component.__metadata.state === f
+      component.__cyclusMetadata.state === f
     ) {
       return;
     }
 
     await component[f]();
-    component.__metadata.state = f;
+    component.__cyclusMetadata.state = f;
   } catch (error) {
     throw new CyclusError(
       `Error in component ${systemKey} in system calling ${f}`,

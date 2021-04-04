@@ -13,19 +13,19 @@ SystemMap {
   },
   "map": Object {
     "component1": Component1 {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
     },
     "component2": Component2 {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
     },
     "component3": Component3 {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "component1": "component1",
           "component2": "component2",
@@ -33,13 +33,13 @@ SystemMap {
         "state": "start",
       },
       "component1": Component1 {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
       },
       "component2": Component2 {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -70,14 +70,14 @@ SystemMap {
   },
   "map": Object {
     "db": Database {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
       "dbConnection": "OPENED",
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "db",
           "scheduler": "sched",
@@ -85,14 +85,14 @@ SystemMap {
         "state": "start",
       },
       "database": Database {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -100,7 +100,7 @@ SystemMap {
       },
     },
     "sched": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
@@ -159,13 +159,13 @@ SystemMap {
   },
   "map": Object {
     "database": Database {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "stop",
       },
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "database",
           "scheduler": "scheduler",
@@ -173,20 +173,20 @@ SystemMap {
         "state": "stop",
       },
       "database": Database {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "stop",
         },
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "stop",
         },
       },
     },
     "scheduler": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "stop",
       },
@@ -202,13 +202,13 @@ SystemMap {
   },
   "map": Object {
     "database": NewDatabase {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "stop",
       },
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "database",
           "scheduler": "scheduler",
@@ -216,20 +216,20 @@ SystemMap {
         "state": "stop",
       },
       "database": NewDatabase {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "stop",
         },
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "stop",
         },
       },
     },
     "scheduler": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "stop",
       },
@@ -253,14 +253,14 @@ SystemMap {
   },
   "map": Object {
     "database": Database {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
       "dbConnection": "OPENED",
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "database",
           "scheduler": "scheduler",
@@ -268,14 +268,14 @@ SystemMap {
         "state": "start",
       },
       "database": Database {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -283,7 +283,7 @@ SystemMap {
       },
     },
     "scheduler": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
@@ -306,14 +306,14 @@ SystemMap {
   },
   "map": Object {
     "database": NewDatabase {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
       "dbConnection": "OPENED",
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "database",
           "scheduler": "scheduler",
@@ -321,14 +321,14 @@ SystemMap {
         "state": "start",
       },
       "database": NewDatabase {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -336,7 +336,7 @@ SystemMap {
       },
     },
     "scheduler": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
@@ -369,14 +369,14 @@ SystemMap {
   },
   "map": Object {
     "database": Database {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
       "dbConnection": "OPENED",
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "database",
           "scheduler": "scheduler",
@@ -384,14 +384,14 @@ SystemMap {
         "state": "start",
       },
       "database": Database {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -399,7 +399,7 @@ SystemMap {
       },
     },
     "scheduler": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
@@ -422,14 +422,14 @@ SystemMap {
   },
   "map": Object {
     "database": NewDatabase {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
       "dbConnection": "OPENED",
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "database",
           "scheduler": "scheduler",
@@ -437,14 +437,14 @@ SystemMap {
         "state": "start",
       },
       "database": NewDatabase {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -452,7 +452,7 @@ SystemMap {
       },
     },
     "scheduler": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
@@ -489,20 +489,20 @@ SystemMap {
   },
   "map": Object {
     "database": Database {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
       "dbConnection": "OPENED",
     },
     "emailService": EmailService {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
     },
     "exampleComponent": ExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "database": "database",
           "scheduler": "scheduler",
@@ -510,14 +510,14 @@ SystemMap {
         "state": "start",
       },
       "database": Database {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
         "dbConnection": "OPENED",
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -525,7 +525,7 @@ SystemMap {
       },
     },
     "newExampleComponent": NewExampleComponent {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "emailService": "emailService",
           "scheduler": "scheduler",
@@ -533,13 +533,13 @@ SystemMap {
         "state": "start",
       },
       "emailService": EmailService {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
       },
       "scheduler": Scheduler {
-        "__metadata": Object {
+        "__cyclusMetadata": Object {
           "dependencies": Object {},
           "state": "start",
         },
@@ -547,7 +547,7 @@ SystemMap {
       },
     },
     "scheduler": Scheduler {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {},
         "state": "start",
       },
@@ -582,7 +582,7 @@ SystemMap {
   },
   "map": Object {
     "component": Component {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "config": "config",
         },
@@ -613,7 +613,7 @@ SystemMap {
   },
   "map": Object {
     "component": Component {
-      "__metadata": Object {
+      "__cyclusMetadata": Object {
         "dependencies": Object {
           "config": "config",
         },
