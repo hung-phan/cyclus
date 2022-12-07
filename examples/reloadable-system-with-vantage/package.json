@@ -6,7 +6,7 @@
     "@types/pg": "^6.1.42",
     "awesome-typescript-loader": "^3.2.1",
     "cyclus": "^1.2.1",
-    "express": "^4.15.3",
+    "express": "^4.17.3",
     "pg": "^7.0.1",
     "rimraf": "^2.6.1",
     "server-destroy": "^1.0.1",
